@@ -25,7 +25,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-//import org.firstinspires.ftc.robotcontroller.external.samples.AprilTagDetectionPipeline;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -43,15 +42,17 @@ public class AprilTagDemo extends LinearOpMode
 
     // Lens intrinsics
     // UNITS ARE PIXELS
-    // NOTE: this calibration is for the C920 webcam at 800x448.
+    // NOTE: this calibration is for the C720 webcam at 1280x960.
+    // MEASUREMENTS FOUND HERE: https://horus.readthedocs.io/en/release-0.2/source/scanner-components/camera.html
     // You will need to do your own calibration for other configurations!
-    double fx = 578.272;
-    double fy = 578.272;
-    double cx = 402.145;
-    double cy = 221.506;
+    double fx = 1430;
+    double fy = 1430;
+    double cx = 480;
+    double cy = 620;
 
     // UNITS ARE METERS
-    double tagsize = 0.166;
+    //for signal sleeve
+    double tagsize = 0.04;
 
     int numFramesWithoutDetection = 0;
 
