@@ -38,6 +38,7 @@ import java.util.ArrayList;
 @TeleOp
 public class AprilTagTest extends LinearOpMode
 {
+
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
