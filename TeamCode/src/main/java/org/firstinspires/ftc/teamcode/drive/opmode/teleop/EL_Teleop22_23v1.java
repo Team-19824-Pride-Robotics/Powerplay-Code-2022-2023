@@ -32,10 +32,10 @@ public class EL_Teleop22_23v1 extends LinearOpMode {
 
         while (!isStopRequested()) {
 
-            if (gamepad2.right_trigger>0) {
+            if (gamepad2.right_trigger>0.5) {
                 /*raise elevator until it hits max height or trigger is no longer held dwn
                 * */
-                elevator.setTargetPosition((int) 1);
+                elevator.setPower(1);
 
             }
 

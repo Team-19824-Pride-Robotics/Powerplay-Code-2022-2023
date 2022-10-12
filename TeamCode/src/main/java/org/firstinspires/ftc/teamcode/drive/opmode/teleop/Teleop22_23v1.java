@@ -59,5 +59,4 @@ public class Teleop22_23v1 extends LinearOpMode {
         }
     }
 
-
 }
