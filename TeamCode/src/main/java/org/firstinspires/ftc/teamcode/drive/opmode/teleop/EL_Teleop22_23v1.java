@@ -12,9 +12,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @TeleOp(group = "drive")
 public class EL_Teleop22_23v1 extends LinearOpMode {
-
     private DcMotor elevator;
-
     @Override
     public void runOpMode() throws InterruptedException {
         elevator = hardwareMap.get(DcMotor.class, "leftRear");

@@ -12,14 +12,16 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @TeleOp(group = "drive")
 public class Teleop22_23v1 extends LinearOpMode {
+    private DcMotor elevator;
     @Override
     public void runOpMode() throws InterruptedException {
+        elevator = hardwareMap.get(DcMotor.class, "elevator");
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double slow = 0.25;
-        double fromWall = 5;
 
         waitForStart();
 
@@ -42,6 +44,16 @@ public class Teleop22_23v1 extends LinearOpMode {
                                 -gamepad1.right_stick_x
                         )
                 );
+            }
+
+            if (gamepad2.right_trigger>0.5) {
+                /*raise elevator until it hits max height or trigger is no longer held dwn
+                 * */
+                elevator.setPower(1);
+            }
+
+            if (gamepad2.right_bumper) {
+                /*Raise to a set height when pressed small_pole==?, medium=?, large=?  */
             }
 
 
