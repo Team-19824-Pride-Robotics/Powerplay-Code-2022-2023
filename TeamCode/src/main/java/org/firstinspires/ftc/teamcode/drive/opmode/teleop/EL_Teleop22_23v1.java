@@ -15,10 +15,10 @@ public class EL_Teleop22_23v1 extends LinearOpMode {
     private DcMotor elevator;
     @Override
     public void runOpMode() throws InterruptedException {
-        elevator = hardwareMap.get(DcMotor.class, "leftRear");
+        elevator = hardwareMap.get(DcMotor.class, "elevator");
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        DistanceSensor distance;
-        distance = hardwareMap.get(DistanceSensor.class, "frontDist");
+        /*DistanceSensor distance;
+        distance = hardwareMap.get(DistanceSensor.class, "frontDist");*/
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -28,17 +28,32 @@ public class EL_Teleop22_23v1 extends LinearOpMode {
         waitForStart();
 
 
+        /*
+         * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
+         */
+        @Override
+        private void loop() {
+            telemetry.addData("Encoder ld", elevator.getCurrentPosition());
+        }
+
         while (!isStopRequested()) {
 
             if (gamepad2.right_trigger>0.5) {
-                /*raise elevator until it hits max height or trigger is no longer held dwn
-                * */
-                elevator.setPower(1);
+                elevator.setPower(0.25);
 
             }
 
+            if (gamepad2.left_trigger>0.5) {
+                elevator.setPower(-0.25);
+            }
+
             if (gamepad2.right_bumper) {
-               /*Raise to a set height when pressed small_pole==?, medium=?, large=?  */
+                elevator.setTargetPosition(1000);
+            }
+
+            if (gamepad2.left_bumper) {
+                elevator.setTargetPosition(100);
+
             }
             else {
                 drive.setWeightedDrivePower(
@@ -67,7 +82,7 @@ public class EL_Teleop22_23v1 extends LinearOpMode {
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
-            telemetry.addData("Distance", distance.getDistance(DistanceUnit.INCH));
+           // telemetry.addData("Distance", distance.getDistance(DistanceUnit.INCH));
             telemetry.addData("fromWall", fromWall);
             telemetry.update();
 
