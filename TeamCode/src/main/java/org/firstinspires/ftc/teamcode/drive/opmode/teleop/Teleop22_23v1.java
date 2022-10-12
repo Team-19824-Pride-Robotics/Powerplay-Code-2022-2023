@@ -60,7 +60,7 @@ public class Teleop22_23v1 extends LinearOpMode {
                 elevator.setPower(0.25);
             }
 
-            if(gamepad2.right_trigger>0){
+            if(gamepad2.left_trigger>0){
                 elevator.setPower(-0.25);
             }
 
@@ -80,8 +80,7 @@ public class Teleop22_23v1 extends LinearOpMode {
                     elevator.setTargetPosition(2000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(0.25);
-                    level = ElevatorLevel.MEDIUM
-                    ;
+                    level = ElevatorLevel.MEDIUM;
                 }
                 else if (level == ElevatorLevel.MEDIUM
             ) {
