@@ -1,27 +1,35 @@
 package org.firstinspires.ftc.teamcode.drive.opmode.teleop;
 
+import static org.firstinspires.ftc.teamcode.drive.opmode.teleop.Teleop22_23v1.ElevatorLevel.GROUND;
+import static org.firstinspires.ftc.teamcode.drive.opmode.teleop.Teleop22_23v1.ElevatorLevel.SHORT;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.opmode.samples.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @TeleOp(group = "drive")
 public class Teleop22_23v1 extends LinearOpMode {
-    private DcMotor elevator;
+    //enumerator to keep track of elevator levels
+    enum ElevatorLevel {
+        GROUND,
+        SHORT,
+        MEDIUM,
+        TALL
+    }
     @Override
-    public void runOpMode() throws InterruptedException {
-        elevator = hardwareMap.get(DcMotor.class, "elevator");
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+    public void runOpMode() throws InterruptedException {
+        //variables
+        DcMotor elevator = hardwareMap.get(DcMotor.class, "elevator");
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         double slow = 0.25;
+        ElevatorLevel level = GROUND;
 
         waitForStart();
 
@@ -46,15 +54,75 @@ public class Teleop22_23v1 extends LinearOpMode {
                 );
             }
 
-            if (gamepad2.right_trigger>0.5) {
+            if (gamepad2.right_trigger>0) {
                 /*raise elevator until it hits max height or trigger is no longer held dwn
                  * */
-                elevator.setPower(1);
+                elevator.setPower(0.25);
             }
 
-            if (gamepad2.right_bumper) {
-                /*Raise to a set height when pressed small_pole==?, medium=?, large=?  */
+            if(gamepad2.right_trigger>0){
+                elevator.setPower(-0.25);
             }
+
+
+            //moves elevator up incrementally to each level
+            if (gamepad2.right_bumper) {
+                //encoder values are placeholders until we know what the actual values are
+                if(level == ElevatorLevel.GROUND)
+                    //if elevator level is ground, move to short
+                    elevator.setTargetPosition(1000);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(0.25);
+                    level = ElevatorLevel.SHORT;
+                }
+                else if(level == ElevatorLevel.SHORT) {
+                    //if elevator level is short move to medium
+                    elevator.setTargetPosition(2000);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(0.25);
+                    level = ElevatorLevel.MEDIUM
+                    ;
+                }
+                else if (level == ElevatorLevel.MEDIUM
+            ) {
+                    //if elevator level is medium move to tall
+                    elevator.setTargetPosition(3000);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(0.25);
+                }else {
+                    //do nothing
+                }
+            }
+
+            //moves elevator down incrementally to each level
+
+            if (gamepad2.left_bumper) {
+                //encoder values are placeholders until we know what the actual values are
+                if (level == ElevatorLevel.TALL) {
+                    //if elevator level is tall, move to medium
+                    elevator.setTargetPosition(2000);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(0.25);
+                    level = ElevatorLevel.MEDIUM;
+                } else if (level == ElevatorLevel.MEDIUM) {
+                    //if elevator level is medium move to short
+                    elevator.setTargetPosition(1000);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(0.25);
+                    level = ElevatorLevel.SHORT;
+                } else if (level == ElevatorLevel.SHORT) {
+                    //if elevator level is short move to ground
+                    elevator.setTargetPosition(0);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(0.25);
+                    level = ElevatorLevel.GROUND;
+                } else {
+                    //do nothing
+                }
+            }
+
+
+
 
 
 
@@ -70,5 +138,3 @@ public class Teleop22_23v1 extends LinearOpMode {
 
         }
     }
-
-}
