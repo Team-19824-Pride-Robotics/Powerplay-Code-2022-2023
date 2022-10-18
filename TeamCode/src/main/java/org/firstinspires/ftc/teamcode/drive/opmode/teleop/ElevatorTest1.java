@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive;
+package org.firstinspires.ftc.teamcode.drive.opmode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -22,7 +22,7 @@ import java.util.Date;
 public class ElevatorTest1 extends OpMode {
     /* Declare OpMode members. */
     //private Blinker control_Hub;
-   // private Blinker expansion_Hub;
+    // private Blinker expansion_Hub;
     private DcMotor elevator;
     private Gyroscope imu;
     private DcMotor leftFront;
@@ -41,8 +41,8 @@ public class ElevatorTest1 extends OpMode {
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
-     //   control_Hub = hardwareMap.get(Blinker.class, "Control_Hub");
-     //   expansion_Hub = hardwareMap.get(Blinker.class, "Expansion_Hub");
+        //   control_Hub = hardwareMap.get(Blinker.class, "Control_Hub");
+        //   expansion_Hub = hardwareMap.get(Blinker.class, "Expansion_Hub");
         elevator = hardwareMap.get(DcMotor.class, "elevator");
         imu = hardwareMap.get(Gyroscope.class, "imu");
         leftFront = hardwareMap.get(DcMotor.class, "LF");
