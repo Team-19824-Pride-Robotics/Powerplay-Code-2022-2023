@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.drive.opmode.teleop;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
@@ -19,6 +20,7 @@ import java.util.Date;
 
 
 @TeleOp
+@Config
 
 public class ElevatorTest1 extends OpMode {
     /* Declare OpMode members. */
@@ -33,6 +35,12 @@ public class ElevatorTest1 extends OpMode {
     private Servo servo1;
     private Servo servo2;
     private Servo servo3;
+    public static double sr1o = .5;
+    public static double sr2o = .8;
+    public static double sr1c = .68;
+    public static double sr2c = 1.6;
+
+
 
 
     //Create elapsed time variable and an instance of elapsed time
@@ -88,20 +96,8 @@ public class ElevatorTest1 extends OpMode {
         double strafe = -gamepad1.left_stick_x;
         double rotate_stick = gamepad1.right_stick_x;
         double rotate_button = 0;
-
         //CLOSE THE CLAW!!
-        if(gamepad2.left_bumper) {
-            servo1.setPosition(0.86);
-            servo2.setPosition(0.38);
-            servo3.setPosition(1);
-        }
-        //OPEN THE CLAW!!
-        if(gamepad2.right_bumper) {
-            servo1.setPosition(0.55);
-            servo2.setPosition(0.7);
-            servo3.setPosition(0.3);
 
-        }
 
         if (gamepad1.left_bumper) {
             rotate_button = -d_power;
@@ -189,6 +185,16 @@ public class ElevatorTest1 extends OpMode {
             elevator.setTargetPosition(pickup);
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setPower(elevator_strength);
+        }
+        else if(gamepad2.left_bumper) {
+            servo1.setPosition(sr1o);
+            servo2.setPosition(sr2o);
+        }
+        //OPEN THE CLAW!!
+        else if(gamepad2.right_bumper) {
+            servo1.setPosition(sr1c);
+            servo2.setPosition(sr2c);
+
         }
 
 
