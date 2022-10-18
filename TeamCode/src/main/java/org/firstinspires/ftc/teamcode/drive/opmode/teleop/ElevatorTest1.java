@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,6 +30,9 @@ public class ElevatorTest1 extends OpMode {
     private DcMotor leftRear;
     private DcMotor rightFront;
     private DcMotor rightRear;
+    private Servo servo1;
+    private Servo servo2;
+    private Servo servo3;
 
 
     //Create elapsed time variable and an instance of elapsed time
@@ -49,6 +53,9 @@ public class ElevatorTest1 extends OpMode {
         leftRear = hardwareMap.get(DcMotor.class, "LB");
         rightFront = hardwareMap.get(DcMotor.class, "RF");
         rightRear = hardwareMap.get(DcMotor.class, "RB");
+        servo1 = hardwareMap.get(Servo.class, "servo1");
+        servo2 = hardwareMap.get(Servo.class, "servo2");
+        servo3 = hardwareMap.get(Servo.class, "servo3");
 
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -81,6 +88,20 @@ public class ElevatorTest1 extends OpMode {
         double strafe = -gamepad1.left_stick_x;
         double rotate_stick = gamepad1.right_stick_x;
         double rotate_button = 0;
+
+        //CLOSE THE CLAW!!
+        if(gamepad2.left_bumper) {
+            servo1.setPosition(0.86);
+            servo2.setPosition(0.38);
+            servo3.setPosition(1);
+        }
+        //OPEN THE CLAW!!
+        if(gamepad2.right_bumper) {
+            servo1.setPosition(0.55);
+            servo2.setPosition(0.7);
+            servo3.setPosition(0.3);
+
+        }
 
         if (gamepad1.left_bumper) {
             rotate_button = -d_power;
