@@ -19,6 +19,7 @@ public class Teleop22_23v1 extends LinearOpMode {
         MEDIUM,
         TALL
     }
+
     @Override
 
     public void runOpMode() throws InterruptedException {
@@ -38,13 +39,12 @@ public class Teleop22_23v1 extends LinearOpMode {
             if (gamepad1.right_bumper) {
                 drive.setWeightedDrivePower(
                         new Pose2d(
-                                -gamepad1.left_stick_y*slow,
-                                -gamepad1.left_stick_x*slow,
-                                -gamepad1.right_stick_x*slow
+                                -gamepad1.left_stick_y * slow,
+                                -gamepad1.left_stick_x * slow,
+                                -gamepad1.right_stick_x * slow
                         )
                 );
-            }
-            else {
+            } else {
                 drive.setWeightedDrivePower(
                         new Pose2d(
                                 -gamepad1.left_stick_y,
@@ -54,41 +54,40 @@ public class Teleop22_23v1 extends LinearOpMode {
                 );
             }
 
-            if (gamepad2.right_trigger>0) {
+            if (gamepad2.right_trigger > 0) {
                 /*raise elevator until it hits max height or trigger is no longer held dwn
                  * */
-                elevator.setPower(0.25);
+                elevator.setPower(1);
             }
 
-            if(gamepad2.left_trigger>0){
-                elevator.setPower(-0.25);
+
+            if (gamepad2.left_trigger > 0) {
+                elevator.setPower(-0.1);
             }
 
 
             //moves elevator up incrementally to each level
             if (gamepad2.right_bumper) {
                 //encoder values are placeholders until we know what the actual values are
-                if(level == ElevatorLevel.GROUND)
+                if (level == ElevatorLevel.GROUND) {
                     //if elevator level is ground, move to short
                     elevator.setTargetPosition(1000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(0.25);
                     level = ElevatorLevel.SHORT;
-                }
-                else if(level == ElevatorLevel.SHORT) {
+                } else if (level == ElevatorLevel.SHORT) {
                     //if elevator level is short move to medium
                     elevator.setTargetPosition(2000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(0.25);
                     level = ElevatorLevel.MEDIUM;
-                }
-                else if (level == ElevatorLevel.MEDIUM
-            ) {
+                } else if (level == ElevatorLevel.MEDIUM
+                ) {
                     //if elevator level is medium move to tall
                     elevator.setTargetPosition(3000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(0.25);
-                }else {
+                } else {
                     //do nothing
                 }
             }
@@ -121,10 +120,6 @@ public class Teleop22_23v1 extends LinearOpMode {
             }
 
 
-
-
-
-
             drive.update();
 
             Pose2d poseEstimate = drive.getPoseEstimate();
@@ -134,6 +129,6 @@ public class Teleop22_23v1 extends LinearOpMode {
             telemetry.update();
 
 
-
         }
     }
+}
