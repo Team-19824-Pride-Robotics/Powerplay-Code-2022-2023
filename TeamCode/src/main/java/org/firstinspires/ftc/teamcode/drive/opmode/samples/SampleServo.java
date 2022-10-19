@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class SampleServo extends LinearOpMode {
     private Blinker control_Hub;
-    private DistanceSensor frontDist;
+   // private DistanceSensor frontDist;
     private Gyroscope imu;
     private DcMotor leftFront;
     private DcMotor leftRear;
@@ -56,12 +56,12 @@ public class SampleServo extends LinearOpMode {
     @Override
     public void runOpMode() {
         control_Hub = hardwareMap.get(Blinker.class, "Control Hub");
-        frontDist = hardwareMap.get(DistanceSensor.class, "frontDist");
+       // frontDist = hardwareMap.get(DistanceSensor.class, "frontDist");
         imu = hardwareMap.get(Gyroscope.class, "imu");
-        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotor.class, "leftRear");
-        rightFront = hardwareMap.get(DcMotor.class, "rightFront");
-        rightRear = hardwareMap.get(DcMotor.class, "rightRear");
+        leftFront = hardwareMap.get(DcMotor.class, "LF");
+        leftRear = hardwareMap.get(DcMotor.class, "LB");
+        rightFront = hardwareMap.get(DcMotor.class, "LF");
+        rightRear = hardwareMap.get(DcMotor.class, "RB");
         servo1 = hardwareMap.get(Servo.class, "servo1");
         servo2 = hardwareMap.get(Servo.class, "servo2");
         servo3 = hardwareMap.get(Servo.class, "servo3");
