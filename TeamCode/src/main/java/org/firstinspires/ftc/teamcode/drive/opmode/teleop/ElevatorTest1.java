@@ -35,13 +35,21 @@ public class ElevatorTest1 extends OpMode {
     private Servo servo1;
     private Servo servo2;
     private Servo servo3;
-    public static double sr1o = .5;
-    public static double sr2o = .8;
-    public static double sr1c = .68;
-    public static double sr2c = 1.6;
-    public static double al = 0;
-    public static double am = .5;
-    public static double ar = 1;
+    public static double sr1o = 0.5;
+    public static double sr2o = 0.8;
+    public static double sr1c = 0.68;
+    public static double sr2c = 0.6;
+    public static double al = 0.02;
+    public static double am = 0.35;
+    public static double ar = 0.69;
+    public static double top = -3780;
+    public static double mid = -2660;
+    public static double low = -1640;
+    public static double pickup = 0;
+
+
+
+
 
 
 
@@ -70,6 +78,11 @@ public class ElevatorTest1 extends OpMode {
 
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
 
     /*
@@ -102,6 +115,7 @@ public class ElevatorTest1 extends OpMode {
         double strafe = -gamepad1.left_stick_x;
         double rotate_stick = gamepad1.right_stick_x;
         double rotate_button = 0;
+
         //CLOSE THE CLAW!!
 
 
@@ -121,10 +135,7 @@ public class ElevatorTest1 extends OpMode {
         rightRear.setPower(drive - rotate);
         rightFront.setPower(drive - rotate);
         double elevator_strength = .5;
-        int top = -3775;
-        int mid = -2655;
-        int low = -1635;
-        int pickup = 0;
+
 
 
         if (gamepad1.dpad_up) {
@@ -154,55 +165,33 @@ public class ElevatorTest1 extends OpMode {
             rightFront.setPower(-d_power);
         }
         if (gamepad1.y) {
-            elevator.setTargetPosition(top);
+            elevator.setTargetPosition((int) top);
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setPower(elevator_strength);
         }
         //elevator to mid
         else if (gamepad1.x) {
-            elevator.setTargetPosition(mid);
+            elevator.setTargetPosition((int) mid);
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setPower(elevator_strength);
         }
         //elevator to low
         else if (gamepad1.a) {
-            elevator.setTargetPosition(low);
+            elevator.setTargetPosition((int) low);
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setPower(elevator_strength);
         }
         // elevator to pickup
         else if (gamepad1.b) {
-            elevator.setTargetPosition(pickup);
+            servo3.setPosition(am);
+            elevator.setTargetPosition((int) pickup);
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setPower(elevator_strength);
         }
 
 
+        //gampad2
 
-        //elevator to top
-         if (gamepad2.y) {
-            elevator.setTargetPosition(top);
-            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elevator.setPower(elevator_strength);
-        }
-        //elevator to mid
-        else if (gamepad2.x) {
-            elevator.setTargetPosition(mid);
-            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elevator.setPower(elevator_strength);
-        }
-        //elevator to low
-        else if (gamepad2.a) {
-            elevator.setTargetPosition(low);
-            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elevator.setPower(elevator_strength);
-        }
-        // elevator to pickup
-        else if (gamepad2.b) {
-            elevator.setTargetPosition(pickup);
-            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elevator.setPower(elevator_strength);
-        }
         //open claw
         else if(gamepad2.left_bumper) {
             servo1.setPosition(sr1o);
