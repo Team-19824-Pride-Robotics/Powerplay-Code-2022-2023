@@ -81,8 +81,7 @@ public class Teleop22_23v1 extends LinearOpMode {
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(0.25);
                     level = ElevatorLevel.MEDIUM;
-                } else if (level == ElevatorLevel.MEDIUM
-                ) {
+                } else if (level == ElevatorLevel.MEDIUM) {
                     //if elevator level is medium move to tall
                     elevator.setTargetPosition(3000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
