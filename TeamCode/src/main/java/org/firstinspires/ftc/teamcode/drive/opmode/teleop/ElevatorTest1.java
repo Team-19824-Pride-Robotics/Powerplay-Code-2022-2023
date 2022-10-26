@@ -42,11 +42,11 @@ public class ElevatorTest1 extends OpMode {
     public static double al = 0.02;
     public static double am = 0.35;
     public static double ar = 0.69;
-    public static double top = -3780;
-    public static double mid = -2660;
-    public static double low = -1640;
-    public static double pickup = 0;
-
+    public static double top = -4200;
+    public static double mid = -3200;
+    public static double low = -1900;
+    public static double pickup = -365;
+    public static double cup = 50;
 
 
 
@@ -183,11 +183,13 @@ public class ElevatorTest1 extends OpMode {
         }
         // elevator to pickup
         else if (gamepad1.b) {
+            pickup = -365;
             servo3.setPosition(am);
             elevator.setTargetPosition((int) pickup);
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elevator.setPower(elevator_strength);
         }
+
 
 
         //gampad2
@@ -213,7 +215,19 @@ public class ElevatorTest1 extends OpMode {
         else if (gamepad2.dpad_right) {
             servo3.setPosition(ar);
          }
+         if (gamepad2.y) {
+             pickup -= cup;
+             elevator.setTargetPosition((int) pickup);
+             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+             elevator.setPower(elevator_strength);
 
+         }
+         if (gamepad2.a) {
+             pickup += cup;
+             elevator.setTargetPosition((int) pickup);
+             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+             elevator.setPower(elevator_strength);
+         }
 
 
 
