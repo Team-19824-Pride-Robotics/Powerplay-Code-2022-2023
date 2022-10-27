@@ -48,23 +48,13 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         double top = -4200;
         double mid = -3200;
         double low = -1900;
-        double pickup = -365;
+        double pickup = 0;
         double cup = 50;
 
         waitForStart();
 
         while (!isStopRequested()) {
 
-            if (gamepad1.right_bumper) {
-                drive.setWeightedDrivePower(
-                        new Pose2d(
-                                -gamepad1.left_stick_y*slow,
-                                -gamepad1.left_stick_x*slow,
-                                -gamepad1.right_stick_x*slow
-                        )
-                );
-            }
-            else {
                 drive.setWeightedDrivePower(
                         new Pose2d(
                                 -gamepad1.left_stick_y,
@@ -72,19 +62,21 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                                 -gamepad1.right_stick_x
                         )
                 );
-            }
+
 
             if (gamepad1.x) {
                 drive.turn(Math.toRadians(180));
             }
-            if (gamepad1.dpad_up && fromWall < 12) {
-                fromWall += 1;
-                sleep(200);
-            }
-            if (gamepad1.dpad_down && fromWall > 0) {
-                fromWall -= 1;
-                sleep(200);
-            }
+//            if (gamepad1.dpad_up && fromWall < 12) {
+//                fromWall += 1;
+//                sleep(200);
+//            }
+//            if (gamepad1.dpad_down && fromWall > 0) {
+//                fromWall -= 1;
+//                sleep(200);
+//            }
+
+
             drive.update();
 
             Pose2d poseEstimate = drive.getPoseEstimate();
@@ -105,36 +97,61 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 servo1.setPosition(sr1c);
                 servo2.setPosition(sr2c);
             }
-
-
-
-            if (gamepad1.a) {
-                //double dist = distance.getDistance(DistanceUnit.INCH);
-
-                /*
-                method 1 uses the pose estimate, you can increase or decrease "fromWall"
-                 to drive that distance from the wall (assuming the wall is x = 0)
-                dpad up/down can be used to change the "fromWall" distance in a match
-                */
-
-                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        // .forward(poseEstimate.getX() - fromWall)
-                        .strafeLeft(poseEstimate.getX() - fromWall)
-                        //.turn(Math.toRadians(180))
-                        .build();
-
-                /*
-                method 2 works the same but uses the distance sensor
-                */
-//                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-//                        .forward(dist - fromWall)
-//                        //.turn(Math.toRadians(180))
-//                        .build();
-
-
-                drive.followTrajectorySequence(trajSeq);
+            //arm to left
+            if (gamepad2.dpad_left) {
+                servo3.setPosition(al);
+            }
+            //arm to mid
+            if (gamepad2.dpad_up) {
+                servo3.setPosition(am);
+            }
+            //arm to right
+            if (gamepad2.dpad_right) {
+                servo3.setPosition(ar);
+            }
+            if (gamepad2.y) {
+                pickup -= cup;
+                elevator.setTargetPosition((int) pickup);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
 
             }
+            if (gamepad2.a) {
+                pickup += cup;
+                elevator.setTargetPosition((int) pickup);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
+
+
+
+//            if (gamepad1.a) {
+//                //double dist = distance.getDistance(DistanceUnit.INCH);
+//
+//                /*
+//                method 1 uses the pose estimate, you can increase or decrease "fromWall"
+//                 to drive that distance from the wall (assuming the wall is x = 0)
+//                dpad up/down can be used to change the "fromWall" distance in a match
+//                */
+//
+//                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+//                        // .forward(poseEstimate.getX() - fromWall)
+//                        .strafeLeft(poseEstimate.getX() - fromWall)
+//                        //.turn(Math.toRadians(180))
+//                        .build();
+//
+//                /*
+//                method 2 works the same but uses the distance sensor
+//                */
+////                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+////                        .forward(dist - fromWall)
+////                        //.turn(Math.toRadians(180))
+////                        .build();
+//
+//
+//                drive.followTrajectorySequence(trajSeq);
+//
+//            }
         }
     }
 
