@@ -1,14 +1,11 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.teleop;
+package org.firstinspires.ftc.teamcode.drive;
 
-import static org.firstinspires.ftc.teamcode.drive.opmode.teleop.Teleop22_23v1.ElevatorLevel.GROUND;
-import static org.firstinspires.ftc.teamcode.drive.opmode.teleop.Teleop22_23v1.ElevatorLevel.SHORT;
+import static org.firstinspires.ftc.teamcode.drive.Teleop22_23v1.ElevatorLevel.GROUND;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
-import org.firstinspires.ftc.teamcode.drive.opmode.samples.SampleMecanumDrive;
 
 @TeleOp(group = "drive")
 public class Teleop22_23v1 extends LinearOpMode {

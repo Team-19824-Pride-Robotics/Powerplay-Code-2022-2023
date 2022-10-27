@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.samples;
+package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import androidx.annotation.NonNull;
 

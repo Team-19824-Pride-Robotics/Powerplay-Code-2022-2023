@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive.opmode.samples;
+package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.qualcomm.robotcore.hardware.Blinker;
 import com.qualcomm.robotcore.hardware.Gyroscope;

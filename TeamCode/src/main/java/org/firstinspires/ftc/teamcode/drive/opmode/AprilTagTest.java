@@ -21,7 +21,7 @@
 
 //test april tag detection
 
-package org.firstinspires.ftc.teamcode.drive.opmode.tests;
+package org.firstinspires.ftc.teamcode.drive.opmode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
