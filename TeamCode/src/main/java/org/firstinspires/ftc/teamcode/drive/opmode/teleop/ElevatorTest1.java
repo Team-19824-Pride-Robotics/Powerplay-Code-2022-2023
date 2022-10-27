@@ -97,6 +97,7 @@ public class ElevatorTest1 extends OpMode {
      */
     @Override
     public void start() {
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
 
@@ -183,7 +184,7 @@ public class ElevatorTest1 extends OpMode {
         }
         // elevator to pickup
         else if (gamepad1.b) {
-            pickup = -365;
+            //pickup = -365;
             servo3.setPosition(am);
             elevator.setTargetPosition((int) pickup);
             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
