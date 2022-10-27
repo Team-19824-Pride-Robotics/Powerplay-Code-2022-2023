@@ -34,6 +34,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         double slow = 0.25;
         double fromWall = 5;
@@ -64,7 +65,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 );
 
 
-            if (gamepad1.x) {
+            if (gamepad1.dpad_down) {
                 drive.turn(Math.toRadians(180));
             }
 //            if (gamepad1.dpad_up && fromWall < 12) {
@@ -85,6 +86,10 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
             telemetry.addData("heading", poseEstimate.getHeading());
             //telemetry.addData("Distance", distance.getDistance(DistanceUnit.INCH));
             telemetry.addData("fromWall", fromWall);
+            telemetry.addData("Encoder elevator", elevator.getCurrentPosition());
+            telemetry.addData("claw1 pos",servo1.getPosition());
+            telemetry.addData("claw2 pos",servo2.getPosition());
+            telemetry.addData("arm pos",servo3.getPosition());
             telemetry.update();
 
             //open claw
@@ -110,14 +115,29 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 servo3.setPosition(ar);
             }
             if (gamepad2.y) {
-                pickup -= cup;
-                elevator.setTargetPosition((int) pickup);
+                //pickup -= cup;
+                elevator.setTargetPosition((int) top);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
 
             }
+
+            if (gamepad2.x) {
+                //pickup += cup;
+                elevator.setTargetPosition((int) mid);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
+
             if (gamepad2.a) {
-                pickup += cup;
+                //pickup += cup;
+                elevator.setTargetPosition((int) low);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
+
+            if (gamepad2.b) {
+                //pickup += cup;
                 elevator.setTargetPosition((int) pickup);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
