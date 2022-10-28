@@ -1,13 +1,32 @@
+/*
+ * Copyright (c) 2021 OpenFTC Team
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+//test april tag detection
+
 package org.firstinspires.ftc.teamcode.drive;
 
-import static java.lang.Thread.sleep;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.Range;
-
-
+//import org.firstinspires.ftc.teamcode.drive.opmode.AprilTagDetectionPipeline;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.AprilTagDetectionPipeline;
 import org.openftc.apriltag.AprilTagDetection;
@@ -17,14 +36,15 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
-@Autonomous
-public class AutoOp_22_3_v1 extends OpMode
+@TeleOp
+public class AutoOp_22_3_v1 extends LinearOpMode
 {
 
     OpenCvCamera camera;
     AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     static final double FEET_PER_METER = 3.28084;
+    int cone_detection = 0; //variable to store the detected cone
 
     // Lens intrinsics
     // UNITS ARE PIXELS
@@ -45,98 +65,75 @@ public class AutoOp_22_3_v1 extends OpMode
     final float THRESHOLD_HIGH_DECIMATION_RANGE_METERS = 1.0f;
     final int THRESHOLD_NUM_FRAMES_NO_DETECTION_BEFORE_LOW_DECIMATION = 4;
 
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
     @Override
-    public void init() {
-        //set up camera and motors here
+    public void runOpMode()
+    {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
 
         camera.setPipeline(aprilTagDetectionPipeline);
-        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
+        {
             @Override
-            public void onOpened() {
-                camera.startStreaming(800, 448, OpenCvCameraRotation.UPRIGHT);
+            public void onOpened()
+            {
+                camera.startStreaming(800,448, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
-            public void onError(int errorCode) {
+            public void onError(int errorCode)
+            {
 
             }
         });
-    }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
-     */
-    @Override
-    public void init_loop() {
-        // Calling getDetectionsUpdate() will only return an object if there was a new frame
-        // processed since the last time we called it. Otherwise, it will return null. This
-        // enables us to only run logic when there has been a new frame, as opposed to the
-        // getLatestDetections() method which will always return an object.
-        ArrayList<AprilTagDetection> detections = aprilTagDetectionPipeline.getDetectionsUpdate();
+        waitForStart();
 
-        // If there's been a new frame...
-        if(detections != null)
+        telemetry.setMsTransmissionInterval(50);
+
+        while (opModeIsActive())
         {
-            telemetry.addData("FPS", camera.getFps());
-            telemetry.addData("Overhead ms", camera.getOverheadTimeMs());
-            telemetry.addData("Pipeline ms", camera.getPipelineTimeMs());
+            // Calling getDetectionsUpdate() will only return an object if there was a new frame
+            // processed since the last time we called it. Otherwise, it will return null. This
+            // enables us to only run logic when there has been a new frame, as opposed to the
+            // getLatestDetections() method which will always return an object.
+            ArrayList<AprilTagDetection> detections = aprilTagDetectionPipeline.getDetectionsUpdate();
+            aprilTagDetectionPipeline.setDecimation(DECIMATION_HIGH);
 
-            // If we don't see any tags
-            if(detections.size() == 0)
+            // If there's been a new frame...
+            if(detections != null)
             {
-                numFramesWithoutDetection++;
+                telemetry.addData("FPS", camera.getFps());
+                telemetry.addData("Overhead ms", camera.getOverheadTimeMs());
+                telemetry.addData("Pipeline ms", camera.getPipelineTimeMs());
 
-                // If we haven't seen a tag for a few frames, lower the decimation
-                // so we can hopefully pick one up if we're e.g. far back
-                if(numFramesWithoutDetection >= THRESHOLD_NUM_FRAMES_NO_DETECTION_BEFORE_LOW_DECIMATION)
-                {
-                    aprilTagDetectionPipeline.setDecimation(DECIMATION_LOW);
+//                // If we don't see any tags
+//                if(detections.size() == 0)
+//                {
+//                    numFramesWithoutDetection++;
+//
+//                    // If we haven't seen a tag for a few frames, lower the decimation
+//                    // so we can hopefully pick one up if we're e.g. far back
+//                    if(numFramesWithoutDetection >= THRESHOLD_NUM_FRAMES_NO_DETECTION_BEFORE_LOW_DECIMATION)
+//                    {
+//                        aprilTagDetectionPipeline.setDecimation(DECIMATION_LOW);
+//                    }
                 }
-            }
-            // We do see tags!
-            else
-            {
-                numFramesWithoutDetection = 0;
-                aprilTagDetectionPipeline.setDecimation(DECIMATION_HIGH);
-
-                for(AprilTagDetection detection : detections)
+                // We do see tags!
+                else
                 {
-                    telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+                    numFramesWithoutDetection = 0;
 
+                    for(AprilTagDetection detection : detections)
+                    {
+                        cone_detection = detection.id;
+                        telemetry.addData("Detected Tag ID: ", cone_detection);
+                    }
                 }
+                telemetry.update();
             }
-            telemetry.update();
+
+            sleep(20);
         }
-    }
-
-
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
-    @Override
-    public void start() {
-
-    }
-
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
-     */
-    @Override
-    public void loop() {
-
-    }
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
-    }
 }
-
