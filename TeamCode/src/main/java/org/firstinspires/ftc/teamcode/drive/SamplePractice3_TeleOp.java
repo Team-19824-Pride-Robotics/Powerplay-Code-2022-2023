@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.drive;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -51,6 +53,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         double low = -1900;
         double pickup = 0;
         double cup = 50;
+//        servo1.setPosition(sr1c);
+//        servo2.setPosition(sr2c);
+//        servo3.setPosition(am);
 
         waitForStart();
 
@@ -83,7 +88,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
             Pose2d poseEstimate = drive.getPoseEstimate();
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", poseEstimate.getHeading());
+            telemetry.addData("heading", Math.toDegrees(poseEstimate.getHeading()));
             //telemetry.addData("Distance", distance.getDistance(DistanceUnit.INCH));
             telemetry.addData("fromWall", fromWall);
             telemetry.addData("Encoder elevator", elevator.getCurrentPosition());
@@ -138,6 +143,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
             if (gamepad2.b) {
                 //pickup += cup;
+                servo3.setPosition(am);
                 elevator.setTargetPosition((int) pickup);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
@@ -145,20 +151,23 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
 
 
-//            if (gamepad1.a) {
-//                //double dist = distance.getDistance(DistanceUnit.INCH);
-//
-//                /*
-//                method 1 uses the pose estimate, you can increase or decrease "fromWall"
-//                 to drive that distance from the wall (assuming the wall is x = 0)
-//                dpad up/down can be used to change the "fromWall" distance in a match
-//                */
-//
-//                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-//                        // .forward(poseEstimate.getX() - fromWall)
-//                        .strafeLeft(poseEstimate.getX() - fromWall)
-//                        //.turn(Math.toRadians(180))
-//                        .build();
+            if (gamepad1.a) {
+                //double dist = distance.getDistance(DistanceUnit.INCH);
+
+                /*
+                method 1 uses the pose estimate, you can increase or decrease "fromWall"
+                 to drive that distance from the wall (assuming the wall is x = 0)
+                dpad up/down can be used to change the "fromWall" distance in a match
+                */
+
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                         //.forward(10)
+                        //.strafeLeft(poseEstimate.getX() - fromWall)
+                        //.turn(Math.toRadians(180))
+                        .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
+                        .build();
+
+                drive.followTrajectorySequence(trajSeq);
 //
 //                /*
 //                method 2 works the same but uses the distance sensor
@@ -171,7 +180,17 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 //
 //                drive.followTrajectorySequence(trajSeq);
 //
-//            }
+            }
+            if(gamepad1.b) {
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        //.forward(10)
+                        //.strafeLeft(poseEstimate.getX() - fromWall)
+                        //.turn(Math.toRadians(180))
+                        .lineToLinearHeading(new Pose2d(34.28, -20.9, Math.toRadians(180)))
+                        .build();
+
+                drive.followTrajectorySequence(trajSeq);
+            }
         }
     }
 
