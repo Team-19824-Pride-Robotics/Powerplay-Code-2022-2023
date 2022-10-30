@@ -61,13 +61,13 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
         while (!isStopRequested()) {
 
-                drive.setWeightedDrivePower(
-                        new Pose2d(
-                                -gamepad1.left_stick_y,
-                                -gamepad1.left_stick_x,
-                                -gamepad1.right_stick_x
-                        )
-                );
+            drive.setWeightedDrivePower(
+                    new Pose2d(
+                            -gamepad1.left_stick_y,
+                            -gamepad1.left_stick_x,
+                            -gamepad1.right_stick_x
+                    )
+            );
 
 
             if (gamepad1.dpad_down) {
@@ -161,7 +161,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 */
 
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                         //.forward(10)
+                        //.forward(10)
                         //.strafeLeft(poseEstimate.getX() - fromWall)
                         //.turn(Math.toRadians(180))
                         .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
