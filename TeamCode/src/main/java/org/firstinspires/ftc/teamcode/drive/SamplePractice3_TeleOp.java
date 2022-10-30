@@ -52,10 +52,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         double mid = -3200;
         double low = -1900;
         double pickup = 0;
-        double cup = 50;
-//        servo1.setPosition(sr1c);
-//        servo2.setPosition(sr2c);
-//        servo3.setPosition(am);
+        servo1.setPosition(sr1c);
+        servo2.setPosition(sr2c);
+        servo3.setPosition(am);
 
         waitForStart();
 
@@ -149,7 +148,29 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 elevator.setPower(elevator_strength);
             }
 
+            if (gamepad1.y) {
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
+                        .addTemporalMarker(0,() -> {
+                            servo3.setPosition(am);
+                            elevator.setTargetPosition((int) pickup);
+                            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                            elevator.setPower(elevator_strength);
+                        })
+                        .build();
+            }
+            if (gamepad1.x) {
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .lineToLinearHeading(new Pose2d(34.28, -20.9, Math.toRadians(180)))
+                        .addDisplacementMarker(5,() -> {
+                            servo3.setPosition(am);
+                            elevator.setTargetPosition((int) top);
+                            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                            elevator.setPower(elevator_strength);
 
+                        })
+                        .build();
+            }
 
             if (gamepad1.a) {
                 //double dist = distance.getDistance(DistanceUnit.INCH);
@@ -193,5 +214,6 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
             }
         }
     }
+
 
 }
