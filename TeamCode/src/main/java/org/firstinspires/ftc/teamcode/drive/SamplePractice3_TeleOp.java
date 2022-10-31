@@ -40,7 +40,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
         double slow = 0.25;
         double fromWall = 5;
-        double elevator_strength = .5;
+        double elevator_strength = 1;
         double sr1o = 0.5;
         double sr2o = 0.8;
         double sr1c = 0.68;
@@ -62,9 +62,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            -gamepad1.left_stick_y,
-                            -gamepad1.left_stick_x,
-                            -gamepad1.right_stick_x
+                            (-gamepad1.left_stick_y)*0.5,
+                            (-gamepad1.left_stick_x)*0.5,
+                            (-gamepad1.right_stick_x)*0.5
                     )
             );
 
