@@ -236,7 +236,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                         .lineToLinearHeading(new Pose2d(34.28, -20.9, Math.toRadians(180)))
                         .build();
 
-                drive.followTrajectorySequence(trajSeq);
+                drive.followTrajectorySequenceAsync(trajSeq);
             }
         }
     }
