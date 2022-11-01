@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.advanced.PoseStorage;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
@@ -23,6 +24,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        drive.setPoseEstimate(PoseStorage.currentPose);
+
         DcMotor elevator;
         Gyroscope imu;
         Servo servo1;
@@ -52,9 +56,12 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         double mid = -3200;
         double low = -1900;
         double pickup = 0;
+        double side = -500;
+
         servo1.setPosition(sr1c);
         servo2.setPosition(sr2c);
         servo3.setPosition(am);
+
 
         waitForStart();
 
@@ -148,12 +155,31 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 elevator.setPower(elevator_strength);
             }
 
+            if (gamepad1.dpad_up) {
+                side -= 50;
+                elevator.setTargetPosition((int) side);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
+
+            if (gamepad1.dpad_down) {
+                side += 50;
+                elevator.setTargetPosition((int) side);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
+
+            if (gamepad1.dpad_right) {
+                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                elevator.setPower(-gamepad2.right_stick_y);
+            }
+
             if (gamepad1.y) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
-                        .addTemporalMarker(0,() -> {
+                        .addTemporalMarker(0, () -> {
                             servo3.setPosition(am);
-                            elevator.setTargetPosition((int) pickup);
+                            elevator.setTargetPosition(0);
                             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                             elevator.setPower(elevator_strength);
                         })
@@ -162,7 +188,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
             if (gamepad1.x) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .lineToLinearHeading(new Pose2d(34.28, -20.9, Math.toRadians(180)))
-                        .addDisplacementMarker(5,() -> {
+                        .addDisplacementMarker(1, () -> {
                             servo3.setPosition(am);
                             elevator.setTargetPosition((int) top);
                             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
