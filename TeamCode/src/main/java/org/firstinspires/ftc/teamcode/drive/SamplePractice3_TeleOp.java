@@ -179,7 +179,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                         .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
                         .addTemporalMarker(0, () -> {
                             servo3.setPosition(am);
-                            elevator.setTargetPosition(0);
+                            elevator.setTargetPosition((int) pickup);
                             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                             elevator.setPower(elevator_strength);
                         })
