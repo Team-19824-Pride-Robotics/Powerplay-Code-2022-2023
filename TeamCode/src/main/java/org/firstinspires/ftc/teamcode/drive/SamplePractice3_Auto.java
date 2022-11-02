@@ -48,28 +48,37 @@ public class SamplePractice3_Auto extends LinearOpMode {
 
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
-                .lineTo(new Vector2d(39.65,0))
+                .addTemporalMarker(0, () -> {
+                    servo1.setPosition(.68);
+                    servo2.setPosition(.6);
+                })
+                .waitSeconds(2)
+                .lineTo(new Vector2d(62.25,0))
                 //move arm up
                 .addTemporalMarker(0, () -> {
                     elevator.setTargetPosition(-3950);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
-                .waitSeconds(3)
                 //move arm to top pole
-                .addTemporalMarker(0, () -> {
+                .addTemporalMarker(3, () -> {
                     servo3.setPosition(0.69);
                 })
-                .waitSeconds(3)
                 //open claw
-                .addTemporalMarker(0, () -> {
+                .addTemporalMarker(6, () -> {
                     servo1.setPosition(.5);
                     servo2.setPosition(.8);
                 })
-                .waitSeconds(1)
-                .lineTo(new Vector2d(57.9,0))
+                .waitSeconds(2)
+                .lineTo(new Vector2d(48.5,0))
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    servo3.setPosition(.35);
+                    elevator.setTargetPosition(0);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
                 .turn(Math.toRadians(90))
-                .lineTo(new Vector2d(57.9,16.85))
+                .lineTo(new Vector2d(48.75,15.75))
                 .build();
         waitForStart();
 

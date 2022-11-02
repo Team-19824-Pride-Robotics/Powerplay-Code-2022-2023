@@ -52,9 +52,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         double al = 0.02;
         double am = 0.35;
         double ar = 0.69;
-        double top = -3950;
+        double top = -4200;
         double mid = -2900;
-        double low = -1730;
+        double low = -1800;
         double pickup = 0;
         double side = -500;
 
@@ -176,7 +176,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
             if (gamepad1.y) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
+                        .lineToLinearHeading(new Pose2d(5.02, -26.8, Math.toRadians(200.63)))
                         .addTemporalMarker(0, () -> {
                             servo3.setPosition(am);
                             elevator.setTargetPosition((int) pickup);
@@ -188,7 +188,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
             }
             if (gamepad1.x) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(34.28, -20.9, Math.toRadians(180)))
+                        .lineToLinearHeading(new Pose2d(38.99, -18.33, Math.toRadians(180)))
                         .addDisplacementMarker(1, () -> {
                             servo3.setPosition(am);
                             elevator.setTargetPosition((int) top);
