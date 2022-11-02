@@ -52,9 +52,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         double al = 0.02;
         double am = 0.35;
         double ar = 0.69;
-        double top = -4200;
-        double mid = -3200;
-        double low = -1900;
+        double top = -3950;
+        double mid = -2900;
+        double low = -1730;
         double pickup = 0;
         double side = -500;
 
@@ -184,6 +184,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                             elevator.setPower(elevator_strength);
                         })
                         .build();
+                drive.followTrajectorySequenceAsync(trajSeq);
             }
             if (gamepad1.x) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
@@ -215,7 +216,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                         .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
                         .build();
 
-                drive.followTrajectorySequence(trajSeq);
+                drive.followTrajectorySequenceAsync(trajSeq);
 //
 //                /*
 //                method 2 works the same but uses the distance sensor
