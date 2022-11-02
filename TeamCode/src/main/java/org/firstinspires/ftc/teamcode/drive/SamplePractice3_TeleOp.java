@@ -69,8 +69,8 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            (-gamepad1.left_stick_y),
-                            (-gamepad1.left_stick_x),
+                            (gamepad1.left_stick_y),
+                            (gamepad1.left_stick_x),
                             (-gamepad1.right_stick_x)
                     )
             );
@@ -114,7 +114,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 servo2.setPosition(sr2c);
             }
             //arm to left
-            if (gamepad2.dpad_left) {
+            if (gamepad2.dpad_right) {
                 servo3.setPosition(al);
             }
             //arm to mid
@@ -122,7 +122,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 servo3.setPosition(am);
             }
             //arm to right
-            if (gamepad2.dpad_right) {
+            if (gamepad2.dpad_left) {
                 servo3.setPosition(ar);
             }
             if (gamepad2.y) {
