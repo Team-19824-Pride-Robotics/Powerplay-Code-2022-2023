@@ -50,12 +50,12 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         double sr1c = 0.68;
         double sr2c = 0.6;
         double al = 0.02;
-        double am = 0.35;
+        double am = 0.38;
         double ar = 0.69;
         double top = -4200;
         double mid = -2900;
         double low = -1800;
-        double pickup = 0;
+        double pickup = 20;
         double side = -500;
 
         servo1.setPosition(sr1c);
