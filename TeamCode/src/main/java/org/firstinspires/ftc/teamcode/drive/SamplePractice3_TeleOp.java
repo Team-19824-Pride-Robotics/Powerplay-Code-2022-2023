@@ -20,7 +20,21 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @TeleOp(group = "drive")
 @Config
 public class SamplePractice3_TeleOp extends LinearOpMode {
-    @Override
+    public static double slow = 0.25;
+    public static double fromWall = 5;
+    public static double elevator_strength = 1;
+    public static double sr1o = 0.5;
+    public static double sr2o = 0.8;
+    public static double sr1c = 0.68;
+    public static double sr2c = 0.6;
+    public static double al = 0.02;
+    public static double am = 0.38;
+    public static double ar = 0.69;
+    public static double top = -4200;
+    public static double mid = -2900;
+    public static double low = -1800;
+    public static double pickup = 20;
+    public static double side = -500;
 
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -41,22 +55,6 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        double slow = 0.25;
-        double fromWall = 5;
-        double elevator_strength = 1;
-        double sr1o = 0.5;
-        double sr2o = 0.8;
-        double sr1c = 0.68;
-        double sr2c = 0.6;
-        double al = 0.02;
-        double am = 0.38;
-        double ar = 0.69;
-        double top = -4200;
-        double mid = -2900;
-        double low = -1800;
-        double pickup = 20;
-        double side = -500;
 
         servo1.setPosition(sr1c);
         servo2.setPosition(sr2c);
