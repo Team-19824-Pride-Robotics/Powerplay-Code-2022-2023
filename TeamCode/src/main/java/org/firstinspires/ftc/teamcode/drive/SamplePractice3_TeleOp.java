@@ -174,6 +174,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 elevator.setPower(-gamepad2.right_stick_y);
             }
 
+
             if (gamepad1.y) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .lineToLinearHeading(new Pose2d(5.02, -26.8, Math.toRadians(200.63)))

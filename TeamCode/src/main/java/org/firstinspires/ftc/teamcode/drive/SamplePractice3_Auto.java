@@ -17,13 +17,27 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
+@Config
 @Autonomous(name="SamplePractice3_Auto")
 
 //@Disabled
 public class SamplePractice3_Auto extends LinearOpMode {
-
-
+// to first pole
+    public static double x1 = 62.25;
+    public static double y1 = 3;
+    //back up to line up for pickup
+    public static double x2 = 48.5;
+    public static double y2 = 0;
+    //pickup
+    public static double x3 = 48;
+    public static double y3 = 17;
+    //backup to score
+    public static double x4 = 48.5;
+    public static double y4 = 0;
+    //forward to pickup
+    public static double x5 = 48;
+    public static double y5 = 17;
+// 4&5 vaule need to be set
 
 
 
@@ -52,10 +66,10 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                .waitSeconds(2)
-                .lineTo(new Vector2d(62.25,0))
+                .waitSeconds(1)
+                .lineTo(new Vector2d(x1,y1))
                 //move arm up
-                .addTemporalMarker(0, () -> {
+                .addTemporalMarker(2, () -> {
                     elevator.setTargetPosition(-3950);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
@@ -70,7 +84,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     servo2.setPosition(.8);
                 })
                 .waitSeconds(2)
-                .lineTo(new Vector2d(48.5,0))
+                .lineTo(new Vector2d(x2,y2))
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     servo3.setPosition(.35);
                     elevator.setTargetPosition(0);
@@ -78,7 +92,34 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     elevator.setPower(1);
                 })
                 .turn(Math.toRadians(90))
-                .lineTo(new Vector2d(48.75,15.75))
+                .lineTo(new Vector2d(x3,y3))
+               // grab cone
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    servo1.setPosition(.68);
+                    servo2.setPosition(.6);
+                })
+                .lineTo(new Vector2d(x4,y4))
+                .addTemporalMarker(0, () -> {
+                    elevator.setTargetPosition(-3950);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(4, () -> {
+                    servo3.setPosition(0.69);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    servo1.setPosition(.5);
+                    servo2.setPosition(.8);
+                })
+                .lineTo(new Vector2d(x5,y5))
+                .addTemporalMarker(0, () -> {
+                    servo3.setPosition(.35);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    elevator.setTargetPosition(0);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
                 .build();
         waitForStart();
 
