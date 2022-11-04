@@ -22,7 +22,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 //@Disabled
 public class SamplePractice3_Auto extends LinearOpMode {
-// to first pole
+
+    public static double armMiddle = 32;
+
+    // to first pole
     public static double x1 = 62.25;
     public static double y1 = 3;
     //back up to line up for pickup
@@ -37,18 +40,14 @@ public class SamplePractice3_Auto extends LinearOpMode {
     //forward to pickup
     public static double x5 = 48;
     public static double y5 = 17;
-// 4&5 vaule need to be set
-
+// 4&5 value need to be set
 
 
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-
         Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
-
         drive.setPoseEstimate(startPose);
-
 
         DcMotor elevator;
         Servo servo1;
@@ -59,7 +58,6 @@ public class SamplePractice3_Auto extends LinearOpMode {
         servo1 = hardwareMap.get(Servo.class, "servo1");
         servo2 = hardwareMap.get(Servo.class, "servo2");
         servo3 = hardwareMap.get(Servo.class, "servo3");
-
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                 .addTemporalMarker(0, () -> {
@@ -86,7 +84,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .waitSeconds(2)
                 .lineTo(new Vector2d(x2,y2))
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
-                    servo3.setPosition(.35);
+                    servo3.setPosition(armMiddle);
                     elevator.setTargetPosition(0);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
@@ -113,7 +111,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 })
                 .lineTo(new Vector2d(x5,y5))
                 .addTemporalMarker(0, () -> {
-                    servo3.setPosition(.35);
+                    servo3.setPosition(armMiddle);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     elevator.setTargetPosition(0);
@@ -121,6 +119,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     elevator.setPower(1);
                 })
                 .build();
+        
         waitForStart();
 
         if (!isStopRequested())
