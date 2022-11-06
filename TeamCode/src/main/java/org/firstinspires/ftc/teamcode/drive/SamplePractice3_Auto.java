@@ -24,6 +24,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class SamplePractice3_Auto extends LinearOpMode {
 
     public static double armMiddle = 0.38;
+    public static int topCone = -600;
+    public static int secondCone = -400;
+    public static double parkY = 30;
 
     // to first pole
     public static double x1 = 60.6;
@@ -31,16 +34,12 @@ public class SamplePractice3_Auto extends LinearOpMode {
     //back up to line up for pickup
     public static double x2 = 47.22;
     public static double y2 = 0;
-    //pickup
+    //cone stack location
     public static double x3 = 48.23;
     public static double y3 = 24.8;
     //backup to score
     public static double x4 = 47.98;
     public static double y4 = -7.38;
-    //forward to pickup
-    public static double x5 = 48.23;
-    public static double y5 = 24.8;
-    public static int topCone = -600;
 
 
     @Override
@@ -60,72 +59,155 @@ public class SamplePractice3_Auto extends LinearOpMode {
         servo3 = hardwareMap.get(Servo.class, "servo3");
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+                //close the claw
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                //.waitSeconds(1)
+
+                //drive to high junction
                 .lineTo(new Vector2d(x1,y1))
-                //move arm up
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+
+                //move arm up, then swing it into position (while driving)
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     elevator.setTargetPosition(-4000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
-                //swing arm to top pole
-                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     servo3.setPosition(0.74);
                 })
-                //open claw
-                .UNSTABLE_addTemporalMarkerOffset(4, () -> {
+
+                //time for the arm to stop swinging
+                .waitSeconds(2)
+
+                //open claw and swing arm back to middle
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     servo1.setPosition(.5);
                     servo2.setPosition(.8);
                 })
-                //wait 2 additional seconds
-                .waitSeconds(2)
-                .lineTo(new Vector2d(x2,y2))
-                //move the arm to the middle
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     servo3.setPosition(armMiddle);
                 })
+
+                //time to score and then swing the arm back
+                .waitSeconds(2)
+
+                //lower the elevator to "top cone" position
                 .UNSTABLE_addTemporalMarkerOffset(2, () -> {
                     elevator.setTargetPosition(topCone);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
+
+                //back up, turn, and then drive to cone stack
+                .lineTo(new Vector2d(x2,y2))
                 .turn(Math.toRadians(90))
                 .lineTo(new Vector2d(x3,y3))
-               // grab cone
-                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+
+                //grab top cone and then raise the elevator up before backing away
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                .waitSeconds(3)
-                .lineTo(new Vector2d(x4,y4))
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    elevator.setTargetPosition(-1200);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
+
+                //time to grab the cone and raise elevator
+                .waitSeconds(3)
+
+                //drive to the high junction
+                .lineTo(new Vector2d(x4,y4))
+
+                //move arm up, then swing it into position (while driving)
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     elevator.setTargetPosition(-4000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(4, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                     servo3.setPosition(0.74);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(5, () -> {
+
+                //time for the arm to stop swinging
+                .waitSeconds(2)
+
+                //open claw and swing arm back to middle
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     servo1.setPosition(.5);
                     servo2.setPosition(.8);
                 })
-                //wait an additional 2 seconds
-                .waitSeconds(7)
-                .lineTo(new Vector2d(x5,y5))
-                //move the arm to the middle
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     servo3.setPosition(armMiddle);
                 })
+
+                //time to score and then swing the arm back
+                .waitSeconds(2)
+
+                //lower the elevator to "second cone" position
                 .UNSTABLE_addTemporalMarkerOffset(2, () -> {
-                    elevator.setTargetPosition(topCone);
+                    elevator.setTargetPosition(secondCone);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
+
+                //drive back to the cone stack
+                .lineTo(new Vector2d(x3,y3))
+
+                //grab top cone and then raise the elevator up before backing away
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    servo1.setPosition(.68);
+                    servo2.setPosition(.6);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    elevator.setTargetPosition(-1200);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
+
+                //time to grab the cone and raise elevator
+                .waitSeconds(3)
+
+                //drive to the high junction
+                .lineTo(new Vector2d(x4,y4))
+
+                //move arm up, then swing it into position (while driving)
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    elevator.setTargetPosition(-4000);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                    servo3.setPosition(0.74);
+                })
+
+                //time for the arm to stop swinging
+                .waitSeconds(2)
+
+                //open claw and swing arm back to middle
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    servo1.setPosition(.5);
+                    servo2.setPosition(.8);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    servo3.setPosition(armMiddle);
+                })
+
+                //time to score and then swing the arm back
+                .waitSeconds(2)
+
+                //lower the elevator to pickup position
+                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                    elevator.setTargetPosition(-20);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
+
+                //use the parkY variable to park in the correct zone
+                .forward(parkY)
                 .build();
 
         waitForStart();

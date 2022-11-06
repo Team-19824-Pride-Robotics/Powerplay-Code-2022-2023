@@ -104,6 +104,8 @@ public class SamplePractice4_auto extends LinearOpMode {
         Pose2d startPose = new Pose2d(0, 0, Math.toRadians(0));
         drive.setPoseEstimate(startPose);
 
+        double parkY = 0;
+
         DcMotor elevator;
         Servo servo1;
         Servo servo2;
@@ -159,7 +161,7 @@ public class SamplePractice4_auto extends LinearOpMode {
                             double row = (recognition.getTop()  + recognition.getBottom()) / 2 ;
                             double width  = Math.abs(recognition.getRight() - recognition.getLeft()) ;
                             double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
-                            double parkY = 0;
+                           // double parkY = 0;
                             if(recognition.getLabel() == "2 Bulb") {
                                 parkY = 27;
                             }
