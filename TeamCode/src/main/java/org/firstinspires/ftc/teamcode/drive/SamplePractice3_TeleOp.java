@@ -33,7 +33,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
     public static double top = -4200;
     public static double mid = -2900;
     public static double low = -1800;
-    public static double pickup = 20;
+    public static double pickup = -20;
     public static double side = -500;
 
     public void runOpMode() throws InterruptedException {
@@ -56,9 +56,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        servo1.setPosition(sr1c);
-        servo2.setPosition(sr2c);
-        servo3.setPosition(am);
+//        servo1.setPosition(sr1c);
+//        servo2.setPosition(sr2c);
+//        servo3.setPosition(am);
 
 
         waitForStart();
