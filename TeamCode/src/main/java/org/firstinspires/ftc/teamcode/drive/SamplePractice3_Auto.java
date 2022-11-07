@@ -75,11 +75,11 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     elevator.setPower(1);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                    servo3.setPosition(0.74);
+                    servo3.setPosition(0.73);
                 })
 
                 //time for the arm to stop swinging
-                .waitSeconds(2)
+                .waitSeconds(1)
 
                 //open claw and swing arm back to middle
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -94,7 +94,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .waitSeconds(2)
 
                 //lower the elevator to "top cone" position
-                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     elevator.setTargetPosition(topCone);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
@@ -106,34 +106,34 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .lineTo(new Vector2d(x3,y3))
 
                 //grab top cone and then raise the elevator up before backing away
-                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.5    , () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(3, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     elevator.setTargetPosition(-1200);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
                 //time to grab the cone and raise elevator
-                .waitSeconds(4)
+                .waitSeconds(3)
 
                 //drive to the high junction
                 .lineTo(new Vector2d(x4,y4))
 
                 //move arm up, then swing it into position (while driving)
-                .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     elevator.setTargetPosition(-4000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
-                    servo3.setPosition(0.74);
+                    servo3.setPosition(0.73);
                 })
 
                 //time for the arm to stop swinging
-                .waitSeconds(2)
+                .waitSeconds(1)
 
                 //open claw and swing arm back to middle
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -145,7 +145,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 })
 
                 //time to score and then swing the arm back
-                .waitSeconds(2)
+                .waitSeconds(1)
 
                 //lower the elevator to "second cone" position
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -158,18 +158,18 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .lineTo(new Vector2d(x3,y3))
 
                 //grab second cone and then raise the elevator up before backing away
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     elevator.setTargetPosition(-1200);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
                 //time to grab the cone and raise elevator
-                .waitSeconds(4)
+                .waitSeconds(2)
 
                 //drive to the high junction
                 .lineTo(new Vector2d(x4,y4))
@@ -181,7 +181,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     elevator.setPower(1);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
-                    servo3.setPosition(0.74);
+                    servo3.setPosition(0.73);
                 })
 
                 //time for the arm to stop swinging

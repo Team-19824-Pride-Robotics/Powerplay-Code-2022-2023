@@ -27,9 +27,9 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
     public static double sr2o = 0.8;
     public static double sr1c = 0.68;
     public static double sr2c = 0.6;
-    public static double al = 0.02;
+    public static double al = .06;
     public static double am = 0.38;
-    public static double ar = 0.69;
+    public static double ar = .73;
     public static double top = -4200;
     public static double mid = -2900;
     public static double low = -1800;
@@ -67,7 +67,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            (gamepad1.left_stick_y),
+                            (-gamepad1.left_stick_y),
                             (gamepad1.left_stick_x),
                             (-gamepad1.right_stick_x)
                     )
