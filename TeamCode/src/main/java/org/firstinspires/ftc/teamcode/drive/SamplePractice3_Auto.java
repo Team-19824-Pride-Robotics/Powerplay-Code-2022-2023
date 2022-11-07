@@ -36,10 +36,10 @@ public class SamplePractice3_Auto extends LinearOpMode {
     public static double y2 = 0;
     //cone stack location
     public static double x3 = 48.23;
-    public static double y3 = 24.8;
+    public static double y3 = 24.3;
     //backup to score
     public static double x4 = 47.98;
-    public static double y4 = -7.38;
+    public static double y4 = -8;
 
 
     @Override
@@ -106,29 +106,29 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .lineTo(new Vector2d(x3,y3))
 
                 //grab top cone and then raise the elevator up before backing away
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(3, () -> {
                     elevator.setTargetPosition(-1200);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
                 //time to grab the cone and raise elevator
-                .waitSeconds(3)
+                .waitSeconds(4)
 
                 //drive to the high junction
                 .lineTo(new Vector2d(x4,y4))
 
                 //move arm up, then swing it into position (while driving)
-                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     elevator.setTargetPosition(-4000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
                     servo3.setPosition(0.74);
                 })
 
@@ -148,7 +148,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .waitSeconds(2)
 
                 //lower the elevator to "second cone" position
-                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     elevator.setTargetPosition(secondCone);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
@@ -157,30 +157,30 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 //drive back to the cone stack
                 .lineTo(new Vector2d(x3,y3))
 
-                //grab top cone and then raise the elevator up before backing away
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                //grab second cone and then raise the elevator up before backing away
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
                     elevator.setTargetPosition(-1200);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
                 //time to grab the cone and raise elevator
-                .waitSeconds(3)
+                .waitSeconds(4)
 
                 //drive to the high junction
                 .lineTo(new Vector2d(x4,y4))
 
                 //move arm up, then swing it into position (while driving)
-                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     elevator.setTargetPosition(-4000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
                     servo3.setPosition(0.74);
                 })
 
