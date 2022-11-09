@@ -106,18 +106,18 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .lineTo(new Vector2d(x3,y3))
 
                 //grab top cone and then raise the elevator up before backing away
-                .UNSTABLE_addTemporalMarkerOffset(.5    , () -> {
+                .UNSTABLE_addTemporalMarkerOffset(0    , () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                     elevator.setTargetPosition(-1200);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
                 //time to grab the cone and raise elevator
-                .waitSeconds(3)
+                .waitSeconds(1)
 
                 //drive to the high junction
                 .lineTo(new Vector2d(x4,y4))
