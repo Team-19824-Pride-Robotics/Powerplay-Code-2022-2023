@@ -3,29 +3,24 @@ package org.firstinspires.ftc.teamcode.drive;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
-
-import org.firstinspires.ftc.teamcode.drive.advanced.PoseStorage;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
-
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.drive.advanced.PoseStorage;
+import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+
 @Config
-@Autonomous(name="SamplePractice3_Auto")
+@Autonomous(name="a_Nala_3_Auto_2")
 
 //@Disabled
-public class SamplePractice3_Auto extends LinearOpMode {
+public class a_Nala_3_Auto_2 extends LinearOpMode {
 
     public static double armMiddle = 0.38;
     public static int topCone = -600;
     public static int secondCone = -400;
+    public static int thirdCone = -200;
     public static double parkY = 30;
 
     // to first pole
@@ -39,7 +34,10 @@ public class SamplePractice3_Auto extends LinearOpMode {
     public static double y3 = 24.3;
     //backup to score
     public static double x4 = 47.98;
-    public static double y4 = -8;
+    public static double y4 = -8.5;
+    //
+    public static double x5 = 45.87;
+    public static double y5 = 14.1;
 
 
     @Override
@@ -111,7 +109,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     servo2.setPosition(.6);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
-                    elevator.setTargetPosition(-1200);
+                    elevator.setTargetPosition(-4000);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
@@ -122,12 +120,6 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 //drive to the high junction
                 .lineTo(new Vector2d(x4,y4))
 
-                //move arm up, then swing it into position (while driving)
-                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                    elevator.setTargetPosition(-4000);
-                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elevator.setPower(1);
-                })
                 .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
                     servo3.setPosition(0.73);
                 })
@@ -163,7 +155,7 @@ public class SamplePractice3_Auto extends LinearOpMode {
                     servo2.setPosition(.6);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
-                    elevator.setTargetPosition(-1200);
+                    elevator.setTargetPosition(-1800);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
@@ -172,20 +164,15 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .waitSeconds(2)
 
                 //drive to the high junction
-                .lineTo(new Vector2d(x4,y4))
+                .lineTo(new Vector2d(x5,y5))
 
-                //move arm up, then swing it into position (while driving)
-                .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                    elevator.setTargetPosition(-4000);
-                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elevator.setPower(1);
-                })
-                .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
-                    servo3.setPosition(0.73);
+
+                .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
+                    servo3.setPosition(.06);
                 })
 
                 //time for the arm to stop swinging
-                .waitSeconds(2)
+                .waitSeconds(1)
 
                 //open claw and swing arm back to middle
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -195,19 +182,38 @@ public class SamplePractice3_Auto extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     servo3.setPosition(armMiddle);
                 })
-
                 //time to score and then swing the arm back
-                .waitSeconds(2)
+                .waitSeconds(.5)
 
                 //lower the elevator to pickup position
-                .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    elevator.setTargetPosition(thirdCone);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
+                .lineTo(new Vector2d(x3,y3))
+
+                .UNSTABLE_addTemporalMarkerOffset(.8, () -> {
+                    servo1.setPosition(.68);
+                    servo2.setPosition(.6);
+                })
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    elevator.setTargetPosition(-1000);
+                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    elevator.setPower(1);
+                })
+                .waitSeconds(.5)
+                .back(2)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     elevator.setTargetPosition(-20);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
+
+
                 //use the parkY variable to park in the correct zone
-                .forward(parkY)
+               // .forward(parkY)
                 .build();
 
         waitForStart();
@@ -217,4 +223,5 @@ public class SamplePractice3_Auto extends LinearOpMode {
         PoseStorage.currentPose = drive.getPoseEstimate();
 
     }
+
 }

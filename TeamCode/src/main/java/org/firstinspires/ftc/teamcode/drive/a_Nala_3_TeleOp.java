@@ -2,24 +2,19 @@ package org.firstinspires.ftc.teamcode.drive;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.advanced.PoseStorage;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
 @TeleOp(group = "drive")
 @Config
-public class SamplePractice3_TeleOp extends LinearOpMode {
+public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double slow = 0.25;
     public static double fromWall = 5;
     public static double elevator_strength = 1;
@@ -35,6 +30,14 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
     public static double low = -1800;
     public static double pickup = -20;
     public static double side = -500;
+    public static double x1 = 5.02;
+    public static double y1 = -26.8;
+    public static double x2 = 38.99;
+    public static double y2 = -18.33;
+    public static double h1 = 200.63;
+    public static double h2 = 180;
+
+
 
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -175,7 +178,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 
             if (gamepad1.y) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(5.02, -26.8, Math.toRadians(200.63)))
+                        .lineToLinearHeading(new Pose2d(x1, y1, Math.toRadians(h1)))
                         .addTemporalMarker(0, () -> {
                             servo3.setPosition(am);
                             elevator.setTargetPosition((int) pickup);
@@ -187,7 +190,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
             }
             if (gamepad1.x) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(38.99, -18.33, Math.toRadians(180)))
+                        .lineToLinearHeading(new Pose2d(x2, y2, Math.toRadians(h2)))
                         .addDisplacementMarker(1, () -> {
                             servo3.setPosition(am);
                             elevator.setTargetPosition((int) top);
@@ -199,14 +202,14 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                 drive.followTrajectorySequenceAsync(trajSeq);
             }
 
-            if (gamepad1.a) {
+           /* if (gamepad1.a) {
                 //double dist = distance.getDistance(DistanceUnit.INCH);
 
-                /*
+
                 method 1 uses the pose estimate, you can increase or decrease "fromWall"
                  to drive that distance from the wall (assuming the wall is x = 0)
                 dpad up/down can be used to change the "fromWall" distance in a match
-                */
+
 
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         //.forward(10)
@@ -215,7 +218,7 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                         .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
                         .build();
 
-                drive.followTrajectorySequenceAsync(trajSeq);
+                drive.followTrajectorySequenceAsync(trajSeq); */
 //
 //                /*
 //                method 2 works the same but uses the distance sensor
@@ -228,8 +231,8 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
 //
 //                drive.followTrajectorySequence(trajSeq);
 //
-            }
-            if(gamepad1.b) {
+//            }
+        /*    if(gamepad1.b) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         //.forward(10)
                         //.strafeLeft(poseEstimate.getX() - fromWall)
@@ -238,7 +241,8 @@ public class SamplePractice3_TeleOp extends LinearOpMode {
                         .build();
 
                 drive.followTrajectorySequenceAsync(trajSeq);
-            }
+
+            } */
         }
     }
 
