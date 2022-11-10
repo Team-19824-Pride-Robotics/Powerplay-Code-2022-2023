@@ -20,15 +20,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name="Auto_Left")
+@Autonomous(name="a_3_alaN_Auto_Final")
 
 //@Disabled
-public class Auto_LEFT extends LinearOpMode {
+public class a_3_alaN_Auto_Final extends LinearOpMode {
 
     public static double armMiddle = 0.38;
     public static int topCone = -650;
     public static int secondCone = -500;
-    public static double parkY = 10;
+    public static double parkY = 30;
 
     // to first pole
     public static double x1 = 60.6;
@@ -93,6 +93,10 @@ public class Auto_LEFT extends LinearOpMode {
         servo2 = hardwareMap.get(Servo.class, "servo2");
         servo3 = hardwareMap.get(Servo.class, "servo3");
 
+        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -138,7 +142,7 @@ public class Auto_LEFT extends LinearOpMode {
                             parkY = 10;
                         }
                         if(recognition.getLabel() == "3 Panel") {
-                            parkY = -10;
+                            parkY = -13;
                         }
                         telemetry.addData(""," ");
                         telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
@@ -166,7 +170,7 @@ public class Auto_LEFT extends LinearOpMode {
 
                     //move arm up, then swing it into position (while driving)
                     .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                        elevator.setTargetPosition(-4200);
+                        elevator.setTargetPosition(-4050);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -207,7 +211,7 @@ public class Auto_LEFT extends LinearOpMode {
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
-                        elevator.setTargetPosition(-4200);
+                        elevator.setTargetPosition(-4050);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -248,18 +252,18 @@ public class Auto_LEFT extends LinearOpMode {
                     .lineTo(new Vector2d(x3,y3))
 
                     //grab second cone and then raise the elevator up before backing away
-                    .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(.3, () -> {
                         servo1.setPosition(.68);
                         servo2.setPosition(.6);
                     })
-                    .UNSTABLE_addTemporalMarkerOffset(1, () -> {
-                        elevator.setTargetPosition(-4200);
+                    .UNSTABLE_addTemporalMarkerOffset(.7, () -> {
+                        elevator.setTargetPosition(-4050);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
 
                     //time to grab the cone and raise elevator
-                    .waitSeconds(2)
+                    .waitSeconds(1.5)
 
                     //drive to the high junction
                     .lineTo(new Vector2d(x4,y4))
@@ -270,20 +274,20 @@ public class Auto_LEFT extends LinearOpMode {
                     })
 
                     //time for the arm to stop swinging
-                    .waitSeconds(2)
+                    .waitSeconds(1.6)
 
                     //open claw and swing arm back to middle
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         servo1.setPosition(.5);
                         servo2.setPosition(.8);
                     })
-                    .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
                         servo3.setPosition(armMiddle);
                     })
                     .waitSeconds(.25)
                     .strafeLeft(1)
                     //time to score and then swing the arm back
-                    .waitSeconds(1)
+                    .waitSeconds(.5)
 
                     //lower the elevator to pickup position
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
