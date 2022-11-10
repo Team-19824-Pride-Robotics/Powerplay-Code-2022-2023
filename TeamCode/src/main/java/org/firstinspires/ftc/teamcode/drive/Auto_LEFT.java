@@ -26,9 +26,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Auto_LEFT extends LinearOpMode {
 
     public static double armMiddle = 0.38;
-    public static int topCone = -600;
-    public static int secondCone = -400;
-    public static double parkY = 30;
+    public static int topCone = -650;
+    public static int secondCone = -500;
+    public static double parkY = 10;
 
     // to first pole
     public static double x1 = 60.6;
@@ -41,7 +41,7 @@ public class Auto_LEFT extends LinearOpMode {
     public static double y3 = 24.3;
     //backup to score
     public static double x4 = 47.98;
-    public static double y4 = -8;
+    public static double y4 = -9;
 
 
     /*
@@ -115,45 +115,46 @@ public class Auto_LEFT extends LinearOpMode {
         }
 
         waitForStart();
+        for (int i = 0; i < 20; i++) {
 
-        if (opModeIsActive()) {
+            if (tfod != null) {
 
-            while (opModeIsActive()) {
 
-                if (tfod != null) {
-                    // getUpdatedRecognitions() will return null if no new information is available since
-                    // the last time that call was made.
-                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-                    if (updatedRecognitions != null) {
-                        telemetry.addData("# Objects Detected", updatedRecognitions.size());
+                // getUpdatedRecognitions() will return null if no new information is available since
+                // the last time that call was made.
+                List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                if (updatedRecognitions != null) {
+                    telemetry.addData("# Objects Detected", updatedRecognitions.size());
 
-                        // step through the list of recognitions and display image position/size information for each one
-                        // Note: "Image number" refers to the randomized image orientation/number
-                        for (Recognition recognition : updatedRecognitions) {
-                            double col = (recognition.getLeft() + recognition.getRight()) / 2 ;
-                            double row = (recognition.getTop()  + recognition.getBottom()) / 2 ;
-                            double width  = Math.abs(recognition.getRight() - recognition.getLeft()) ;
-                            double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
+                    // step through the list of recognitions and display image position/size information for each one
+                    // Note: "Image number" refers to the randomized image orientation/number
+                    for (Recognition recognition : updatedRecognitions) {
+                        double col = (recognition.getLeft() + recognition.getRight()) / 2 ;
+                        double row = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+                        double width  = Math.abs(recognition.getRight() - recognition.getLeft()) ;
+                        double height = Math.abs(recognition.getTop()  - recognition.getBottom()) ;
 
-                            if(recognition.getLabel() == "2 Bulb") {
-                                parkY = 10;
-                            }
-                            if(recognition.getLabel() == "3 Panel") {
-                                parkY = -10;
-                            }
-                            telemetry.addData(""," ");
-                            telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
-                            telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
-                            telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
-                            telemetry.addData("Parking Location: ", parkY);
-
+                        if(recognition.getLabel() == "2 Bulb") {
+                            parkY = 10;
                         }
-                        telemetry.update();
+                        if(recognition.getLabel() == "3 Panel") {
+                            parkY = -10;
+                        }
+                        telemetry.addData(""," ");
+                        telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
+                        telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
+                        telemetry.addData("- Size (Width/Height)","%.0f / %.0f", width, height);
+                        telemetry.addData("Parking Location: ", parkY);
+
                     }
+                    telemetry.update();
                 }
             }
+        }
+        if (opModeIsActive()) {
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
+
                     //close the claw
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         servo1.setPosition(.68);
@@ -165,7 +166,7 @@ public class Auto_LEFT extends LinearOpMode {
 
                     //move arm up, then swing it into position (while driving)
                     .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                        elevator.setTargetPosition(-4000);
+                        elevator.setTargetPosition(-4200);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -201,28 +202,22 @@ public class Auto_LEFT extends LinearOpMode {
                     .lineTo(new Vector2d(x3,y3))
 
                     //grab top cone and then raise the elevator up before backing away
-                    .UNSTABLE_addTemporalMarkerOffset(.5    , () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0    , () -> {
                         servo1.setPosition(.68);
                         servo2.setPosition(.6);
                     })
-                    .UNSTABLE_addTemporalMarkerOffset(1, () -> {
-                        elevator.setTargetPosition(-1200);
+                    .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
+                        elevator.setTargetPosition(-4200);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
 
                     //time to grab the cone and raise elevator
-                    .waitSeconds(3)
+                    .waitSeconds(1)
 
                     //drive to the high junction
                     .lineTo(new Vector2d(x4,y4))
 
-                    //move arm up, then swing it into position (while driving)
-                    .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                        elevator.setTargetPosition(-4000);
-                        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
-                    })
                     .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
                         servo3.setPosition(0.73);
                     })
@@ -258,7 +253,7 @@ public class Auto_LEFT extends LinearOpMode {
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(1, () -> {
-                        elevator.setTargetPosition(-1200);
+                        elevator.setTargetPosition(-4200);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -269,12 +264,7 @@ public class Auto_LEFT extends LinearOpMode {
                     //drive to the high junction
                     .lineTo(new Vector2d(x4,y4))
 
-                    //move arm up, then swing it into position (while driving)
-                    .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                        elevator.setTargetPosition(-4000);
-                        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
-                    })
+
                     .UNSTABLE_addTemporalMarkerOffset(-1.5, () -> {
                         servo3.setPosition(0.73);
                     })
@@ -290,12 +280,13 @@ public class Auto_LEFT extends LinearOpMode {
                     .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                         servo3.setPosition(armMiddle);
                     })
-
+                    .waitSeconds(.25)
+                    .strafeLeft(1)
                     //time to score and then swing the arm back
-                    .waitSeconds(2)
+                    .waitSeconds(1)
 
                     //lower the elevator to pickup position
-                    .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-20);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);

@@ -21,7 +21,7 @@ public class a_Nala_3_Auto_2 extends LinearOpMode {
     public static int topCone = -600;
     public static int secondCone = -400;
     public static int thirdCone = -200;
-    public static double parkY = 30;
+    public static double parkY = 20;
 
     // to first pole
     public static double x1 = 60.6;
@@ -58,6 +58,9 @@ public class a_Nala_3_Auto_2 extends LinearOpMode {
 
         TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
                 //close the claw
+
+                .back(parkY)
+
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
@@ -163,10 +166,10 @@ public class a_Nala_3_Auto_2 extends LinearOpMode {
                 //time to grab the cone and raise elevator
                 .waitSeconds(2)
 
-                //drive to the high junction
+                //drive to the low junction
                 .lineTo(new Vector2d(x5,y5))
 
-
+                //swing arm to the left for low junction
                 .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                     servo3.setPosition(.06);
                 })
@@ -182,34 +185,47 @@ public class a_Nala_3_Auto_2 extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     servo3.setPosition(armMiddle);
                 })
-                //time to score and then swing the arm back
-                .waitSeconds(.5)
-
-                //lower the elevator to pickup position
-                .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
-                    elevator.setTargetPosition(thirdCone);
-                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elevator.setPower(1);
-                })
-                .lineTo(new Vector2d(x3,y3))
-
-                .UNSTABLE_addTemporalMarkerOffset(.8, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     servo1.setPosition(.68);
                     servo2.setPosition(.6);
                 })
+                //time to score and then swing the arm back
+                .waitSeconds(1)
+
+                //put the arm down in preparation for teleOp
                 .UNSTABLE_addTemporalMarkerOffset(1, () -> {
-                    elevator.setTargetPosition(-1000);
-                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    elevator.setPower(1);
-                })
-                .waitSeconds(.5)
-                .back(2)
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    elevator.setTargetPosition(-20);
+                    elevator.setTargetPosition(0);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
+//                //lower the elevator to thirdCone position
+//                .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+//                    elevator.setTargetPosition(thirdCone);
+//                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                    elevator.setPower(1);
+//                })
+//
+//                //drive back to the cone stack
+//                .lineTo(new Vector2d(x3,y3))
+//
+//                //close the claw and raise up off the stack
+//                .UNSTABLE_addTemporalMarkerOffset(.8, () -> {
+//                    servo1.setPosition(.68);
+//                    servo2.setPosition(.6);
+//                })
+//                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+//                    elevator.setTargetPosition(-1000);
+//                    elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                    elevator.setPower(1);
+//                })
+//
+//                //time to get that last cone
+//                .waitSeconds(1.5)
+
+                //back up so we can put the arm down
+               // .back(parkY)
+                .turn(Math.toRadians(90))
 
 
                 //use the parkY variable to park in the correct zone

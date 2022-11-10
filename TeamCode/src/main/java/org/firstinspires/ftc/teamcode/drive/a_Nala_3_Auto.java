@@ -22,7 +22,7 @@ public class a_Nala_3_Auto extends LinearOpMode {
     public static double armMiddle = 0.38;
     public static int topCone = -650;
     public static int secondCone = -500;
-    public static double parkY = 30;
+    public static double parkY = 10;
 
     // to first pole
     public static double x1 = 60.6;
@@ -190,14 +190,14 @@ public class a_Nala_3_Auto extends LinearOpMode {
                 .waitSeconds(1)
 
                 //lower the elevator to pickup position
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     elevator.setTargetPosition(-20);
                     elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                     elevator.setPower(1);
                 })
 
                 //use the parkY variable to park in the correct zone
-               // .forward(parkY)
+                //.forward(parkY)
                 .build();
 
         waitForStart();
