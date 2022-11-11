@@ -20,10 +20,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@Autonomous(name="a_3_alaN_Auto_Final")
+@Autonomous(name="a_3_alaN_Auto_Final_Left")
 
 //@Disabled
-public class a_3_alaN_Auto_Final extends LinearOpMode {
+public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
     public static double armMiddle = 0.38;
     public static int topCone = -650;
