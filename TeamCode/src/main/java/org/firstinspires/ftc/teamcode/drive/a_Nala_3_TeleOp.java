@@ -29,13 +29,14 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double mid = -2900;
     public static double low = -1800;
     public static double pickup = -20;
-    public static double side = -500;
     public static double x1 = 5.02;
     public static double y1 = -26.8;
     public static double x2 = 38.99;
     public static double y2 = -18.33;
     public static double h1 = 200.63;
     public static double h2 = 180;
+    public static double side = -800;
+    public static double nextcone = 150;
 
 
 
@@ -77,17 +78,17 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             );
 
 
-            if (gamepad1.dpad_down) {
+         /*   if (gamepad1.dpad_down) {
                 drive.turn(Math.toRadians(180));
             }
-//            if (gamepad1.dpad_up && fromWall < 12) {
-//                fromWall += 1;
-//                sleep(200);
-//            }
-//            if (gamepad1.dpad_down && fromWall > 0) {
-//                fromWall -= 1;
-//                sleep(200);
-//            }
+            if (gamepad1.dpad_up && fromWall < 12) {
+                fromWall += 1;
+                sleep(200);
+            }
+            if (gamepad1.dpad_down && fromWall > 0) {
+                fromWall -= 1;
+                sleep(200);
+            } */
 
 
             drive.update();
@@ -157,14 +158,14 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             }
 
             if (gamepad1.dpad_up) {
-                side -= 50;
+                side -= nextcone;
                 elevator.setTargetPosition((int) side);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
 
             if (gamepad1.dpad_down) {
-                side += 50;
+                side += nextcone;
                 elevator.setTargetPosition((int) side);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
@@ -172,7 +173,6 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
 
             if (gamepad1.dpad_right) {
                 elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                elevator.setPower(-gamepad2.right_stick_y);
             }
 
 
