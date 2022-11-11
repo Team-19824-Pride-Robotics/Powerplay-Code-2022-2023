@@ -144,6 +144,9 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                         if(recognition.getLabel() == "3 Panel") {
                             parkY = -13;
                         }
+                        if(recognition.getLabel() == "1 Bolt") {
+                            parkY = 30;
+                        }
                         telemetry.addData(""," ");
                         telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
                         telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);

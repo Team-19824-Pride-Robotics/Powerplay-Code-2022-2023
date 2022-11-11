@@ -31,13 +31,13 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
 
     // to first pole
     public static double x1 = 60.6;
-    public static double y1 = -1.5;
+    public static double y1 = 0;
     //back up to line up for pickup
     public static double x2 = 47.22;
     public static double y2 = 0;
     //cone stack location
-    public static double x3 = 48.23;
-    public static double y3 = -24.3;
+    public static double x3 = 50;
+    public static double y3 = -23;
     //backup to score
     public static double x4 = 47.98;
     public static double y4 = 9;
@@ -143,6 +143,9 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
                         if(recognition.getLabel() == "3 Panel") {
                             parkY = 30;
                         }
+                        if(recognition.getLabel() == "1 Bolt") {
+                            parkY = -13;
+                        }
                         telemetry.addData(""," ");
                         telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100 );
                         telemetry.addData("- Position (Row/Col)","%.0f / %.0f", row, col);
@@ -169,7 +172,7 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
 
                     //move arm up, then swing it into position (while driving)
                     .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                        elevator.setTargetPosition(-4050);
+                        elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -201,7 +204,7 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
 
                     //back up, turn, and then drive to cone stack
                     .lineTo(new Vector2d(x2,y2))
-                    .turn(Math.toRadians(90))
+                    .turn(Math.toRadians(-90))
                     .lineTo(new Vector2d(x3,y3))
 
                     //grab top cone and then raise the elevator up before backing away
@@ -210,7 +213,7 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
-                        elevator.setTargetPosition(-4050);
+                        elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -256,7 +259,7 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(.7, () -> {
-                        elevator.setTargetPosition(-4050);
+                        elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
