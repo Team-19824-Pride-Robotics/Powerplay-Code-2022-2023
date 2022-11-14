@@ -15,8 +15,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @TeleOp(group = "drive")
 @Config
 public class a_Nala_3_TeleOp extends LinearOpMode {
-    public static double slow = 0.25;
-    public static double fromWall = 5;
+
     public static double elevator_strength = 1;
     public static double sr1o = 0.5;
     public static double sr2o = 0.8;
@@ -36,9 +35,6 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double y2 = -18.33;
     public static double h1 = 200.63;
     public static double h2 = 180;
-    public static double side = -800;
-    public static double nextcone = 150;
-
 
 
     public void runOpMode() throws InterruptedException {
@@ -61,50 +57,76 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
         elevator.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         elevator.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-//        servo1.setPosition(sr1c);
-//        servo2.setPosition(sr2c);
-//        servo3.setPosition(am);
-
 
         waitForStart();
 
         while (!isStopRequested()) {
 
+            /*//////////////////////////
+            DRIVER 1 CONTROLS START HERE
+            *///////////////////////////
+            double driving = (-gamepad1.left_stick_y) * 0.75;
+            double strafing = (gamepad1.left_stick_x) * 0.75;
+            double turning = (-gamepad1.right_stick_x) * 0.75;
+
+            if(gamepad1.dpad_left) {
+                strafing = -0.25;
+            }
+            if(gamepad1.dpad_right) {
+                strafing = 0.25;
+            }
+            if(gamepad1.dpad_up) {
+                driving = -0.25;
+            }
+            if(gamepad1.dpad_down) {
+                driving = 0.25;
+            }
+
             drive.setWeightedDrivePower(
                     new Pose2d(
-                            (-gamepad1.left_stick_y),
-                            (gamepad1.left_stick_x),
-                            (-gamepad1.right_stick_x)
+                            (driving),
+                            (strafing),
+                            (turning)
                     )
             );
 
-
-         /*   if (gamepad1.dpad_down) {
-                drive.turn(Math.toRadians(180));
-            }
-            if (gamepad1.dpad_up && fromWall < 12) {
-                fromWall += 1;
-                sleep(200);
-            }
-            if (gamepad1.dpad_down && fromWall > 0) {
-                fromWall -= 1;
-                sleep(200);
-            } */
-
-
             drive.update();
 
-            Pose2d poseEstimate = drive.getPoseEstimate();
-            telemetry.addData("x", poseEstimate.getX());
-            telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", Math.toDegrees(poseEstimate.getHeading()));
-            //telemetry.addData("Distance", distance.getDistance(DistanceUnit.INCH));
-            telemetry.addData("fromWall", fromWall);
-            telemetry.addData("Encoder elevator", elevator.getCurrentPosition());
-            telemetry.addData("claw1 pos",servo1.getPosition());
-            telemetry.addData("claw2 pos",servo2.getPosition());
-            telemetry.addData("arm pos",servo3.getPosition());
-            telemetry.update();
+            if (gamepad1.a) {
+                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                elevator.setPower(-gamepad2.right_stick_y);
+            }
+
+            if (gamepad1.y) {
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .lineToLinearHeading(new Pose2d(x1, y1, Math.toRadians(h1)))
+                        .addTemporalMarker(0, () -> {
+                            servo3.setPosition(am);
+                            elevator.setTargetPosition((int) pickup);
+                            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                            elevator.setPower(elevator_strength);
+                        })
+                        .build();
+                drive.followTrajectorySequenceAsync(trajSeq);
+            }
+            if (gamepad1.x) {
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .lineToLinearHeading(new Pose2d(x2, y2, Math.toRadians(h2)))
+                        .addDisplacementMarker(1, () -> {
+                            servo3.setPosition(am);
+                            elevator.setTargetPosition((int) top);
+                            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                            elevator.setPower(elevator_strength);
+
+                        })
+                        .build();
+                drive.followTrajectorySequenceAsync(trajSeq);
+            }
+
+
+            /*//////////////////////////
+            DRIVER 2 CONTROLS START HERE
+            *///////////////////////////
 
             //open claw
             if(gamepad2.left_bumper) {
@@ -134,132 +156,26 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
                 elevator.setPower(elevator_strength);
             }
             if (gamepad2.y) {
-                //pickup -= cup;
                 elevator.setTargetPosition((int) top);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
-
             }
-
             if (gamepad2.x) {
-                //pickup += cup;
                 elevator.setTargetPosition((int) mid);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
-
             if (gamepad2.a) {
-                //pickup += cup;
                 elevator.setTargetPosition((int) low);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
-
             if (gamepad2.b) {
-                //pickup += cup;
                 servo3.setPosition(am);
                 elevator.setTargetPosition((int) pickup);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
-
-            if (gamepad1.dpad_up) {
-                drive.setWeightedDrivePower(
-                        new Pose2d(1,0,0.0)
-                );
-            }
-
-            if (gamepad1.dpad_down) {
-                drive.setWeightedDrivePower(
-                        new Pose2d(-1,0,0.0)
-                );
-            }
-
-            if (gamepad1.dpad_right) {
-                drive.setWeightedDrivePower(
-                        new Pose2d(0,1,0.0)
-                );
-            }
-            if (gamepad1.dpad_left) {
-                drive.setWeightedDrivePower(
-                        new Pose2d(0,-1,0.0)
-                );
-            }
-            if (gamepad1.a) {
-                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                elevator.setPower(-gamepad2.right_stick_y);
-            }
-
-
-            if (gamepad1.y) {
-                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(x1, y1, Math.toRadians(h1)))
-                        .addTemporalMarker(0, () -> {
-                            servo3.setPosition(am);
-                            elevator.setTargetPosition((int) pickup);
-                            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                            elevator.setPower(elevator_strength);
-                        })
-                        .build();
-                drive.followTrajectorySequenceAsync(trajSeq);
-            }
-            if (gamepad1.x) {
-                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(x2, y2, Math.toRadians(h2)))
-                        .addDisplacementMarker(1, () -> {
-                            servo3.setPosition(am);
-                            elevator.setTargetPosition((int) top);
-                            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                            elevator.setPower(elevator_strength);
-
-                        })
-                        .build();
-                drive.followTrajectorySequenceAsync(trajSeq);
-            }
-
-           /* if (gamepad1.a) {
-                //double dist = distance.getDistance(DistanceUnit.INCH);
-
-
-                method 1 uses the pose estimate, you can increase or decrease "fromWall"
-                 to drive that distance from the wall (assuming the wall is x = 0)
-                dpad up/down can be used to change the "fromWall" distance in a match
-
-
-                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        //.forward(10)
-                        //.strafeLeft(poseEstimate.getX() - fromWall)
-                        //.turn(Math.toRadians(180))
-                        .lineToLinearHeading(new Pose2d(0.2, -19.04, Math.toRadians(193.53)))
-                        .build();
-
-                drive.followTrajectorySequenceAsync(trajSeq); */
-//
-//                /*
-//                method 2 works the same but uses the distance sensor
-//                */
-////                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-////                        .forward(dist - fromWall)
-////                        //.turn(Math.toRadians(180))
-////                        .build();
-//
-//
-//                drive.followTrajectorySequence(trajSeq);
-//
-//            }
-        /*    if(gamepad1.b) {
-                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        //.forward(10)
-                        //.strafeLeft(poseEstimate.getX() - fromWall)
-                        //.turn(Math.toRadians(180))
-                        .lineToLinearHeading(new Pose2d(34.28, -20.9, Math.toRadians(180)))
-                        .build();
-
-                drive.followTrajectorySequenceAsync(trajSeq);
-
-            } */
         }
     }
-
-
 }
