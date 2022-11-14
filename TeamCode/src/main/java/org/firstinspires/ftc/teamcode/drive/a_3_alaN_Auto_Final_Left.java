@@ -31,8 +31,8 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
     public static double parkY = 30;
 
     // to first pole
-    public static double x1 = 60.6;
-    public static double y1 = 1.5;
+    public static double x1 = 59.5;
+    public static double y1 = 0;
     //back up to line up for pickup
     public static double x2 = 47.22;
     public static double y2 = 0;
@@ -41,7 +41,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
     public static double y3 = 24.3;
     //backup to score
     public static double x4 = 47.98;
-    public static double y4 = -9;
+    public static double y4 = -10;
 
 
     /*
@@ -164,7 +164,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //close the claw
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        servo1.setPosition(.68);
+                        servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
 
@@ -173,7 +173,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //move arm up, then swing it into position (while driving)
                     .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                        elevator.setTargetPosition(-4050);
+                        elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -210,11 +210,11 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //grab top cone and then raise the elevator up before backing away
                     .UNSTABLE_addTemporalMarkerOffset(0    , () -> {
-                        servo1.setPosition(.68);
+                        servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
-                        elevator.setTargetPosition(-4050);
+                        elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })
@@ -256,11 +256,11 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //grab second cone and then raise the elevator up before backing away
                     .UNSTABLE_addTemporalMarkerOffset(.3, () -> {
-                        servo1.setPosition(.68);
+                        servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(.7, () -> {
-                        elevator.setTargetPosition(-4050);
+                        elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(1);
                     })

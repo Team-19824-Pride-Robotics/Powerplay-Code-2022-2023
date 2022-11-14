@@ -30,17 +30,17 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
     public static double parkY = -13;
 
     // to first pole
-    public static double x1 = 60.6;
+    public static double x1 = 59.5;
     public static double y1 = 0;
     //back up to line up for pickup
     public static double x2 = 47.22;
     public static double y2 = 0;
     //cone stack location
-    public static double x3 = 50;
+    public static double x3 = 48.5;
     public static double y3 = -23;
     //backup to score
     public static double x4 = 47.98;
-    public static double y4 = 9;
+    public static double y4 = 10;
 
 
     /*
@@ -163,7 +163,7 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
 
                     //close the claw
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        servo1.setPosition(.68);
+                        servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
 
@@ -209,7 +209,7 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
 
                     //grab top cone and then raise the elevator up before backing away
                     .UNSTABLE_addTemporalMarkerOffset(0    , () -> {
-                        servo1.setPosition(.68);
+                        servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
@@ -255,7 +255,7 @@ public class a_3_alaN_Auto_Final_Right extends LinearOpMode {
 
                     //grab second cone and then raise the elevator up before backing away
                     .UNSTABLE_addTemporalMarkerOffset(.3, () -> {
-                        servo1.setPosition(.68);
+                        servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(.7, () -> {

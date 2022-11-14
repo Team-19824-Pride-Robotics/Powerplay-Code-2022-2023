@@ -20,14 +20,15 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double elevator_strength = 1;
     public static double sr1o = 0.5;
     public static double sr2o = 0.8;
-    public static double sr1c = 0.68;
+    public static double sr1c = 0.65;
     public static double sr2c = 0.6;
     public static double al = .06;
     public static double am = 0.38;
     public static double ar = .73;
     public static double top = -4200;
-    public static double mid = -2900;
-    public static double low = -1800;
+    public static double mid = -3000;
+    public static double low = -1850;
+    public static double ground = -200;
     public static double pickup = -20;
     public static double x1 = 5.02;
     public static double y1 = -26.8;
@@ -127,6 +128,11 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             if (gamepad2.dpad_left) {
                 servo3.setPosition(ar);
             }
+            if (gamepad2.dpad_down) {
+                elevator.setTargetPosition((int) ground);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
             if (gamepad2.y) {
                 //pickup -= cup;
                 elevator.setTargetPosition((int) top);
@@ -158,21 +164,30 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             }
 
             if (gamepad1.dpad_up) {
-                side -= nextcone;
-                elevator.setTargetPosition((int) side);
-                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                elevator.setPower(elevator_strength);
+                drive.setWeightedDrivePower(
+                        new Pose2d(1,0,0.0)
+                );
             }
 
             if (gamepad1.dpad_down) {
-                side += nextcone;
-                elevator.setTargetPosition((int) side);
-                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                elevator.setPower(elevator_strength);
+                drive.setWeightedDrivePower(
+                        new Pose2d(-1,0,0.0)
+                );
             }
 
             if (gamepad1.dpad_right) {
+                drive.setWeightedDrivePower(
+                        new Pose2d(0,1,0.0)
+                );
+            }
+            if (gamepad1.dpad_left) {
+                drive.setWeightedDrivePower(
+                        new Pose2d(0,-1,0.0)
+                );
+            }
+            if (gamepad1.a) {
                 elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                elevator.setPower(-gamepad2.right_stick_y);
             }
 
 
