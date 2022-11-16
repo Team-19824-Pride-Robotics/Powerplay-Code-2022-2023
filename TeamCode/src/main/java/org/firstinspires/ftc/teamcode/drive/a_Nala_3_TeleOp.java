@@ -66,9 +66,15 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             DRIVER 1 CONTROLS START HERE
             *///////////////////////////
             double driving = (-gamepad1.left_stick_y) * 0.75;
-            double strafing = (gamepad1.left_stick_x) * 0.75;
+            double strafing = (gamepad1.left_stick_x) * 0;
             double turning = (-gamepad1.right_stick_x) * 0.75;
 
+            if(gamepad1.left_trigger>0.3) {
+                strafing = gamepad1.left_trigger;
+            }
+            if(gamepad1.right_trigger>0.3) {
+                strafing = -gamepad1.right_trigger;
+            }
             if(gamepad1.dpad_left) {
                 strafing = -0.25;
             }
@@ -92,9 +98,9 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
 
             drive.update();
 
-            if (gamepad1.a) {
+            if (gamepad2.left_stick_button) {
                 elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                elevator.setPower(-gamepad2.right_stick_y);
+                elevator.setPower(gamepad2.right_stick_y);
             }
 
             if (gamepad1.y) {
