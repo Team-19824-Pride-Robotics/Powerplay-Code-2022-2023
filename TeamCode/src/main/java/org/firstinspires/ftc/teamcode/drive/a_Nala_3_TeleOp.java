@@ -98,10 +98,9 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
 
             drive.update();
 
-            if (gamepad2.left_stick_button) {
-                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                elevator.setPower(gamepad2.right_stick_y);
-            }
+            //////////////////////////////
+            //Semi-autonomous routines start here
+            //////////////////////////////
 
             if (gamepad1.y) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
@@ -156,32 +155,48 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             if (gamepad2.dpad_left) {
                 servo3.setPosition(ar);
             }
+            //elevator to ground terminal level
             if (gamepad2.dpad_down) {
                 elevator.setTargetPosition((int) ground);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
+            //elevator to high junction level
             if (gamepad2.y) {
                 elevator.setTargetPosition((int) top);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
+            //elevator to middle junction level
             if (gamepad2.x) {
                 elevator.setTargetPosition((int) mid);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
+            //elevator to low junction level
             if (gamepad2.a) {
                 elevator.setTargetPosition((int) low);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
+            //elevator to pickup level
             if (gamepad2.b) {
                 servo3.setPosition(am);
                 elevator.setTargetPosition((int) pickup);
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
+            //to move elevator manually, press left stick button to drop elevator and
+            //right stick button to raise it
+            if (gamepad2.left_stick_button) {
+                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                elevator.setPower(-elevator_strength*0.5);
+            }
+            if (gamepad2.right_stick_button) {
+                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                elevator.setPower(elevator_strength*0.5);
+            }
+
         }
     }
 }
