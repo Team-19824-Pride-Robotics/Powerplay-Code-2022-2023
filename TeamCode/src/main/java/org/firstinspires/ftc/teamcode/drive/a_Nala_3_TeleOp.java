@@ -36,7 +36,8 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double y2 = 18.307;
     public static double h1 = 200.63;
     public static double h2 = 180;
-
+    public static double downToScore = 200;
+    public static double bumpUpElevator = 50;
 
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -197,21 +198,20 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
-//            //to move elevator manually, press left stick button to drop elevator and
-//            //right stick button to raise it
-//            if (gamepad2.left_stick_button) {
-//                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                elevator.setPower(-elevator_strength*0.5);
-//            }
-//            if (gamepad2.right_stick_button) {
-//                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                elevator.setPower(elevator_strength*0.5);
-//            }
-//            else {
-//                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//                elevator.setPower(0);
-//            }
-
+            //to move elevator manually, press left stick button to drop elevator and
+            //right stick button to raise it
+            if (gamepad2.left_stick_button) {
+                double score = elevator.getCurrentPosition() + downToScore;
+                elevator.setTargetPosition((int) score);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
+            if (gamepad2.right_stick_button) {
+                double raise = elevator.getCurrentPosition() - bumpUpElevator;
+                elevator.setTargetPosition((int) raise);
+                elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                elevator.setPower(elevator_strength);
+            }
         }
     }
 }
