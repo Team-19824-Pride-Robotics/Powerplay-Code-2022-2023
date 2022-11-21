@@ -187,16 +187,20 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
                 elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 elevator.setPower(elevator_strength);
             }
-            //to move elevator manually, press left stick button to drop elevator and
-            //right stick button to raise it
-            if (gamepad2.left_stick_button) {
-                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                elevator.setPower(-elevator_strength*0.5);
-            }
-            if (gamepad2.right_stick_button) {
-                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-                elevator.setPower(elevator_strength*0.5);
-            }
+//            //to move elevator manually, press left stick button to drop elevator and
+//            //right stick button to raise it
+//            if (gamepad2.left_stick_button) {
+//                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                elevator.setPower(-elevator_strength*0.5);
+//            }
+//            if (gamepad2.right_stick_button) {
+//                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                elevator.setPower(elevator_strength*0.5);
+//            }
+//            else {
+//                elevator.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//                elevator.setPower(0);
+//            }
 
         }
     }
