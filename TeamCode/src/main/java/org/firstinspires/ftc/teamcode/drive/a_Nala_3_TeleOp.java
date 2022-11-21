@@ -99,6 +99,16 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
 
             drive.update();
 
+            Pose2d poseEstimate = drive.getPoseEstimate();
+            telemetry.addData("x", poseEstimate.getX());
+            telemetry.addData("y", poseEstimate.getY());
+            telemetry.addData("heading", Math.toDegrees(poseEstimate.getHeading()));
+            telemetry.addData("Encoder elevator", elevator.getCurrentPosition());
+            telemetry.addData("claw1 pos",servo1.getPosition());
+            telemetry.addData("claw2 pos",servo2.getPosition());
+            telemetry.addData("arm pos",servo3.getPosition());
+            telemetry.update();
+
             //////////////////////////////
             //Semi-autonomous routines start here
             //////////////////////////////
