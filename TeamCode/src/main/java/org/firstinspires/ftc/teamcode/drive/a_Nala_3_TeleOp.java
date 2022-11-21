@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.drive;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -29,10 +30,10 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double low = -1850;
     public static double ground = -200;
     public static double pickup = -20;
-    public static double x1 = 5.02;
-    public static double y1 = -26.8;
-    public static double x2 = 38.99;
-    public static double y2 = -18.33;
+    public static double x1 = 31.943;
+    public static double y1 = 23.829;
+    public static double x2 = -2.745;
+    public static double y2 = 18.307;
     public static double h1 = 200.63;
     public static double h2 = 180;
 
@@ -104,22 +105,22 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
 
             if (gamepad1.y) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(x1, y1, Math.toRadians(h1)))
+                        .splineToConstantHeading(new Vector2d(x1, y1), Math.toRadians(h2))
                         .addTemporalMarker(0, () -> {
                             servo3.setPosition(am);
-                            elevator.setTargetPosition((int) pickup);
+                            elevator.setTargetPosition((int) top);
                             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                             elevator.setPower(elevator_strength);
                         })
                         .build();
                 drive.followTrajectorySequenceAsync(trajSeq);
             }
-            if (gamepad1.x) {
+            if (gamepad1.a) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .lineToLinearHeading(new Pose2d(x2, y2, Math.toRadians(h2)))
+                        .splineToConstantHeading(new Vector2d(x2, y2), Math.toRadians(h2))
                         .addDisplacementMarker(1, () -> {
                             servo3.setPosition(am);
-                            elevator.setTargetPosition((int) top);
+                            elevator.setTargetPosition((int) pickup);
                             elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                             elevator.setPower(elevator_strength);
 
