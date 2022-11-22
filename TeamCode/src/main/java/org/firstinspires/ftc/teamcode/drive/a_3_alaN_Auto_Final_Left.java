@@ -118,13 +118,10 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
             tfod.setZoom(1.0, 16.0/9.0);
         }
 
-        waitForStart();
-
-                    for (int i = 0; i < 20; i++) {
+        while (!isStarted()) {
 
                 if (tfod != null) {
-
-
+                    
                     // getUpdatedRecognitions() will return null if no new information is available since
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -160,8 +157,9 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                 }
             }
 
-        if (opModeIsActive()) {
+        waitForStart();
 
+        if (opModeIsActive()) {
 
             TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(startPose)
 
