@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Config
 public class a_Nala_3_TeleOp extends LinearOpMode {
 
-    public static double elevator_strength = 1;
+    public static double elevator_strength = 0.5;
     public static double sr1o = 0.5;    
     public static double sr2o = 0.8;
     public static double sr1c = 0.62;
@@ -36,7 +36,7 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double y2 = 18.307;
     public static double h1 = 200.63;
     public static double h2 = 180;
-    public static double downToScore = 200;
+    public static double downToScore = 50;
     public static double bumpUpElevator = 50;
 
     public void runOpMode() throws InterruptedException {
@@ -67,9 +67,9 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             /*//////////////////////////
             DRIVER 1 CONTROLS START HERE
             *///////////////////////////
-            double driving = (-gamepad1.left_stick_y) * 0.75;
+            double driving = (-gamepad1.left_stick_y) * 0.5;
             double strafing = (gamepad1.left_stick_x) * 0;
-            double turning = (-gamepad1.right_stick_x) * 0.75;
+            double turning = (-gamepad1.right_stick_x) * 0.5;
 
             if(gamepad1.left_trigger>0.3) {
                 strafing = gamepad1.left_trigger;

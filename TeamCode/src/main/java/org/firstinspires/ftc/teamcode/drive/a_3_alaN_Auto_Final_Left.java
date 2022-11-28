@@ -29,6 +29,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
     public static int topCone = -650;
     public static int secondCone = -500;
     public static double parkY = 32;
+    public static double elevator_strength = 0.5;
 
     // to first pole
     public static double x1 = 59.5;
@@ -176,7 +177,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                         elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
+                        elevator.setPower(elevator_strength);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
                         servo3.setPosition(0.73);
@@ -201,7 +202,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(topCone);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
+                        elevator.setPower(elevator_strength);
                     })
 
                     //back up, turn, and then drive to cone stack
@@ -217,7 +218,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
+                        elevator.setPower(elevator_strength);
                     })
 
                     //time to grab the cone and raise elevator
@@ -250,7 +251,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(secondCone);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
+                        elevator.setPower(elevator_strength);
                     })
 
                     //drive back to the cone stack
@@ -264,7 +265,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
+                        elevator.setPower(elevator_strength);
                     })
 
                     //time to grab the cone and raise elevator
@@ -296,7 +297,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-20);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        elevator.setPower(1);
+                        elevator.setPower(elevator_strength);
                     })
 
                     //use the parkY variable to park in the correct zone
