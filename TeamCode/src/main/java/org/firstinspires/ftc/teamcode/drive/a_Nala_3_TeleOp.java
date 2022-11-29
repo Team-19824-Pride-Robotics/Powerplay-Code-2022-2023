@@ -18,9 +18,9 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class a_Nala_3_TeleOp extends LinearOpMode {
 
     public static double elevator_strength = 0.5;
-    public static double sr1o = 0.5;    
+    public static double sr1o = 0.4;
     public static double sr2o = 0.8;
-    public static double sr1c = 0.62;
+    public static double sr1c = 0.64;
     public static double sr2c = 0.6;
     public static double al = .06;
     public static double am = 0.38;
@@ -72,10 +72,10 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             double turning = (-gamepad1.right_stick_x) * 0.5;
 
             if(gamepad1.left_trigger>0.3) {
-                strafing = gamepad1.left_trigger;
+                strafing = (gamepad1.left_trigger)*0.5;
             }
             if(gamepad1.right_trigger>0.3) {
-                strafing = -gamepad1.right_trigger;
+                strafing = (-gamepad1.right_trigger)*0.5;
             }
             if(gamepad1.dpad_left) {
                 strafing = -0.25;
