@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Config
 public class a_Nala_3_TeleOp extends LinearOpMode {
 
-    public static double elevator_strength = 0.5;
+    public static double elevator_strength = 1;
     public static double sr1o = 0.4;
     public static double sr2o = 0.8;
     public static double sr1c = 0.64;

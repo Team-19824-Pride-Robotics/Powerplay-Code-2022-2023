@@ -29,7 +29,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
     public static int topCone = -650;
     public static int secondCone = -500;
     public static double parkY = 32;
-    public static double elevator_strength = 0.5;
+    public static double elevator_strength = 1;
 
     // to first pole
     public static double x1 = 59.5;
@@ -38,8 +38,8 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
     public static double x2 = 47;
     public static double y2 = 0;
     //cone stack location
-    public static double x3 = 47.5;
-    public static double y3 = 23;
+    public static double x3 = 48;
+    public static double y3 = 23.5;
     //backup to score
     public static double x4 = 47.5;
     public static double y4 = -11.5;
@@ -211,18 +211,18 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .lineTo(new Vector2d(x3,y3))
 
                     //grab top cone and then raise the elevator up before backing away
-                    .UNSTABLE_addTemporalMarkerOffset(-0.5    , () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0    , () -> {
                         servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
-                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                         elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(elevator_strength);
                     })
 
                     //time to grab the cone and raise elevator
-                    .waitSeconds(0.5)
+                    .waitSeconds(0.75)
 
                     //drive to the high junction
                     .lineTo(new Vector2d(x4,y4))
@@ -258,18 +258,18 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .lineTo(new Vector2d(x3,y3))
 
                     //grab second cone and then raise the elevator up before backing away
-                    .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
-                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                         elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(elevator_strength);
                     })
 
                     //time to grab the cone and raise elevator
-                    .waitSeconds(0.5)
+                    .waitSeconds(0.75)
 
                     //drive to the high junction
                     .lineTo(new Vector2d(x4,y4))
