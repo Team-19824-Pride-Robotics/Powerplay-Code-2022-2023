@@ -211,18 +211,18 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .lineTo(new Vector2d(x3,y3))
 
                     //grab top cone and then raise the elevator up before backing away
-                    .UNSTABLE_addTemporalMarkerOffset(0    , () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(-0.5    , () -> {
                         servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
-                    .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(elevator_strength);
                     })
 
                     //time to grab the cone and raise elevator
-                    .waitSeconds(0.75)
+                    .waitSeconds(0.5)
 
                     //drive to the high junction
                     .lineTo(new Vector2d(x4,y4))
@@ -258,18 +258,18 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                     .lineTo(new Vector2d(x3,y3))
 
                     //grab second cone and then raise the elevator up before backing away
-                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
                         servo1.setPosition(.65);
                         servo2.setPosition(.6);
                     })
-                    .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
+                    .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-4150);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(elevator_strength);
                     })
 
                     //time to grab the cone and raise elevator
-                    .waitSeconds(0.75)
+                    .waitSeconds(0.5)
 
                     //drive to the high junction
                     .lineTo(new Vector2d(x4,y4))
