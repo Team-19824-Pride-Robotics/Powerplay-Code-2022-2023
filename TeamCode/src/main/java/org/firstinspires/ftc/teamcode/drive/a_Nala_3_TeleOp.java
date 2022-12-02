@@ -31,9 +31,9 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double ground = -200;
     public static double pickup = -20;
     public static double x1 = 31.943;
-    public static double y1 = 23.829;
+    public static double y1 = -23.829;
     public static double x2 = -2.745;
-    public static double y2 = 18.307;
+    public static double y2 = -18.307;
     public static double h1 = 200.63;
     public static double h2 = 180;
     public static double downToScore = 50;

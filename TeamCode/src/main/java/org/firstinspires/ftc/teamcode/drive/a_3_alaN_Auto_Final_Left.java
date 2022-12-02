@@ -32,16 +32,16 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
     public static double elevator_strength = 1;
 
     // to first pole
-    public static double x1 = 59.5;
-    public static double y1 = 0;
+    public static double x1 = 39.36;
+    public static double y1 = 2.5;
     //back up to line up for pickup
-    public static double x2 = 47;
-    public static double y2 = 0;
+    public static double x2 = 48.5;
+    public static double y2 = 2.5;
     //cone stack location
-    public static double x3 = 48;
-    public static double y3 = 23.5;
+    public static double x3 = 48.5;
+    public static double y3 = 23;
     //backup to score
-    public static double x4 = 47.5;
+    public static double x4 = 48.5;
     public static double y4 = -11.5;
 
 
@@ -166,21 +166,21 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //close the claw
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        servo1.setPosition(.65);
-                        servo2.setPosition(.6);
+                        servo1.setPosition(0.8);
+                        servo2.setPosition(0.44);
                     })
 
                     //drive to high junction
                     .lineTo(new Vector2d(x1,y1))
 
                     //move arm up, then swing it into position (while driving)
-                    .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
-                        elevator.setTargetPosition(-4150);
+                    .UNSTABLE_addTemporalMarkerOffset(-1.75, () -> {
+                        elevator.setTargetPosition(-1850);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(elevator_strength);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(-1, () -> {
-                        servo3.setPosition(0.73);
+                        servo3.setPosition(.06);
                     })
 
                     //time for the arm to stop swinging
@@ -188,8 +188,8 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //open claw and swing arm back to middle
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        servo1.setPosition(.5);
-                        servo2.setPosition(.8);
+                        servo1.setPosition(0.6);
+                        servo2.setPosition(0.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                         servo3.setPosition(armMiddle);
@@ -212,8 +212,8 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //grab top cone and then raise the elevator up before backing away
                     .UNSTABLE_addTemporalMarkerOffset(-0.5    , () -> {
-                        servo1.setPosition(.65);
-                        servo2.setPosition(.6);
+                        servo1.setPosition(0.8);
+                        servo2.setPosition(0.44);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-4150);
@@ -237,8 +237,8 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //open claw and swing arm back to middle
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        servo1.setPosition(.5);
-                        servo2.setPosition(.8);
+                        servo1.setPosition(0.6);
+                        servo2.setPosition(0.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                         servo3.setPosition(armMiddle);
@@ -259,8 +259,8 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //grab second cone and then raise the elevator up before backing away
                     .UNSTABLE_addTemporalMarkerOffset(-0.5, () -> {
-                        servo1.setPosition(.65);
-                        servo2.setPosition(.6);
+                        servo1.setPosition(0.8);
+                        servo2.setPosition(0.44);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                         elevator.setTargetPosition(-4150);
@@ -284,8 +284,8 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
 
                     //open claw and swing arm back to middle
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        servo1.setPosition(.5);
-                        servo2.setPosition(.8);
+                        servo1.setPosition(0.6);
+                        servo2.setPosition(0.6);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                         servo3.setPosition(armMiddle);
