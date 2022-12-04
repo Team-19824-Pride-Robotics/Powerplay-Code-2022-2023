@@ -41,7 +41,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
     public static double x3 = 48.5;
     public static double y3 = 23;
     //backup to score
-    public static double x4 = 48.5;
+    public static double x4 = 49;
     public static double y4 = -11.5;
 
 

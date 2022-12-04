@@ -30,11 +30,11 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double low = -1850;
     public static double ground = -200;
     public static double pickup = -20;
-    public static double x1 = 31.943;
-    public static double y1 = -23.829;
-    public static double x2 = -2.745;
-    public static double y2 = -18.307;
-    public static double h1 = 200.63;
+    public static double x1 = 35.91;
+    public static double y1 = -28.22;
+    public static double x2 = .754;
+    public static double y2 = -23.276;
+    public static double h1 = 180;
     public static double h2 = 180;
     public static double downToScore = 50;
     public static double bumpUpElevator = 50;
@@ -42,7 +42,7 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        drive.setPoseEstimate(PoseStorage.currentPose);
+        //drive.setPoseEstimate(PoseStorage.currentPose);
 
         DcMotor elevator;
         Gyroscope imu;
@@ -70,6 +70,9 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             double driving = (-gamepad1.left_stick_y) * 0.5;
             double strafing = (gamepad1.left_stick_x) * 0;
             double turning = (-gamepad1.right_stick_x) * 0.5;
+
+            if (gamepad1.right_bumper)
+                 driving = (-gamepad1.left_stick_y) * 1;
 
             if(gamepad1.left_trigger>0.3) {
                 strafing = (gamepad1.left_trigger)*0.5;
@@ -114,18 +117,7 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             //Semi-autonomous routines start here
             //////////////////////////////
 
-            if (gamepad1.y) {
-                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .splineToConstantHeading(new Vector2d(x1, y1), Math.toRadians(h2))
-                        .addTemporalMarker(0, () -> {
-                            servo3.setPosition(am);
-                            elevator.setTargetPosition((int) top);
-                            elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                            elevator.setPower(elevator_strength);
-                        })
-                        .build();
-                drive.followTrajectorySequenceAsync(trajSeq);
-            }
+
             if (gamepad1.a) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .splineToConstantHeading(new Vector2d(x2, y2), Math.toRadians(h2))
@@ -139,6 +131,21 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
                         .build();
                 drive.followTrajectorySequenceAsync(trajSeq);
             }
+
+        if (gamepad1.y) {
+            TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                    .splineToConstantHeading(new Vector2d(x1, y1), Math.toRadians(h1))
+                    .addDisplacementMarker(.1, () -> {
+                        servo3.setPosition(am);
+                        elevator.setTargetPosition((int) top);
+                        elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                        elevator.setPower(elevator_strength);
+
+                    })
+                    .build();
+            drive.followTrajectorySequenceAsync(trajSeq);
+        }
+
 
 
             /*//////////////////////////
