@@ -127,7 +127,7 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             //////////////////////////////
 
 
-            if (gamepad1.a) {
+      /*      if (gamepad1.a) {
                 TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .splineToConstantHeading(new Vector2d(x2, y2), Math.toRadians(h2))
                         .addDisplacementMarker(1, () -> {
@@ -154,6 +154,21 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
                     .build();
             drive.followTrajectorySequenceAsync(trajSeq);
         }
+*/
+            if (gamepad1.y) {
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .back(36)
+                        .build();
+                drive.followTrajectorySequenceAsync(trajSeq);
+            }
+
+
+            if (gamepad1.a) {
+                TrajectorySequence trajSeq = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .forward(36)
+                        .build();
+                drive.followTrajectorySequenceAsync(trajSeq);
+            }
 
 
 
