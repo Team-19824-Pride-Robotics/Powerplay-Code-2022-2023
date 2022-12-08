@@ -39,6 +39,7 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
     public static double h2 = 180;
     public static double downToScore = 150;
     public static double bumpUpElevator = 150;
+    public boolean ClawState = true;
 
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -177,15 +178,20 @@ public class a_Nala_3_TeleOp extends LinearOpMode {
             *///////////////////////////
 
             //open claw
-            if(gamepad2.left_bumper) {
+            if(gamepad2.left_bumper && ClawState == false) {
                 servo1.setPosition(sr1o);
                 servo2.setPosition(sr2o);
+                ClawState=true;
             }
+
             //close claw
-            if(gamepad2.right_bumper) {
+            if(gamepad2.left_bumper && ClawState == true) {
                 servo1.setPosition(sr1c);
                 servo2.setPosition(sr2c);
+                ClawState=false;
             }
+
+
             //arm to left
             if (gamepad2.dpad_right) {
                 servo3.setPosition(al);
