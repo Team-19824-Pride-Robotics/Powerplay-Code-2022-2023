@@ -53,7 +53,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
      * Here we assume it's an Asset.    Also see method initTfod() below .
      */
     private static final String TFOD_MODEL_ASSET = "PowerPlay.tflite";
-     //private static final String TFOD_MODEL_ASSET  = "powerplay_19824_signal.tflite";
+     //private static final String TFOD_MODEL_ASSET  = "powerplay_19824_v2.tflite";
 
     private static final String[] LABELS = {
             "1 Bolt",
@@ -216,7 +216,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                         servo2.setPosition(0.44);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        elevator.setTargetPosition(-4150);
+                        elevator.setTargetPosition(-4000);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(elevator_strength);
                     })
@@ -263,7 +263,7 @@ public class a_3_alaN_Auto_Final_Left extends LinearOpMode {
                         servo2.setPosition(0.44);
                     })
                     .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                        elevator.setTargetPosition(-4150);
+                        elevator.setTargetPosition(-4000);
                         elevator.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         elevator.setPower(elevator_strength);
                     })
