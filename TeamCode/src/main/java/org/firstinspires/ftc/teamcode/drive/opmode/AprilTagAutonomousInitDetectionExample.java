@@ -32,7 +32,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
-@Disabled
+//@Disabled
 @TeleOp
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
@@ -54,6 +54,14 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     double tagsize = 0.166;
 
     int ID_TAG_OF_INTEREST = 18; // Tag ID 18 from the 36h11 family
+
+    //tag IDs of sleeve markers
+    int park_left = 0;
+    int park_middle = 1;
+    int park_right = 2;
+
+    //variable for parking
+    int parkY = 30;
 
     AprilTagDetection tagOfInterest = null;
 
@@ -163,34 +171,23 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             telemetry.update();
         }
 
-        /* Actually do something useful */
-        if(tagOfInterest == null)
+        /* Actually do something useful*/
+        if(tagOfInterest == null || tagOfInterest.id == park_left)
         {
-            /*
-             * Insert your autonomous code here, presumably running some default configuration
-             * since the tag was never sighted during INIT
-             */
+           //set the parking variable to go to the left (or 1) position
+            parkY = 30;
         }
-        else
+        else if (tagOfInterest.id == park_middle)
         {
-            /*
-             * Insert your autonomous code here, probably using the tag pose to decide your configuration.
-             */
+            //set the parking variable to go to the left (or 1) position
+            parkY = 10;
+        }
+        else if (tagOfInterest.id == park_right)
+        {
+            //set the parking variable to go to the left (or 1) position
+            parkY = -13;
+        }
 
-            // e.g.
-            if(tagOfInterest.pose.x <= 20)
-            {
-                // do something
-            }
-            else if(tagOfInterest.pose.x >= 20 && tagOfInterest.pose.x <= 50)
-            {
-                // do something else
-            }
-            else if(tagOfInterest.pose.x >= 50)
-            {
-                // do something else
-            }
-        }
 
 
         /* You wouldn't have this in your autonomous, this is just to prevent the sample from ending */

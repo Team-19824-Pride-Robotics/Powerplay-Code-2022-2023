@@ -32,7 +32,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
-@Disabled
+//@Disabled
 @TeleOp
 public class AprilTagDemo extends LinearOpMode
 {
